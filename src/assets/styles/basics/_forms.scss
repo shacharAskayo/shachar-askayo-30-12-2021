@@ -1,0 +1,95 @@
+button {
+    cursor: pointer;
+    border: 0;
+    border-radius: 3px;
+    background-color: $light-bgc;
+    color: $clr2;
+    padding: 5px 10px;
+    margin: 5px;
+    margin-left: 0px;
+}
+
+button:hover {
+    background-color: $sec-bgc;
+}
+form>*:not(button) {
+    display: block;
+}
+
+form {
+
+    &.hidden-btn {
+        button {
+            visibility: hidden;
+            height: 0;
+        }
+        &>:focus+button {
+            visibility: visible;
+            height: 100%;
+        }
+        button:active{
+            visibility: visible;
+            height: 100%;
+        }
+    }
+}
+
+.hidden-actions-form{
+     input{
+        display:inline;
+        padding-left: 5px;
+    }
+    input[type="checkbox"]{
+        margin-right: 20px;
+    }
+}
+
+.hidden-actions{
+
+    visibility: hidden;
+    height: 0px;
+    
+    button.icon {
+        background-color: $main-bgc;
+    }
+    button:not(.icon){
+        background-color: $clr3;
+        color: whitesmoke;
+    }  
+    
+    button.disabled{
+        background-color: $light-bgc;
+        color: $clr1;
+    }
+    
+}
+
+.hidden-actions-form-container:focus-within{
+
+    div.hidden-actions{
+        display: flex;
+        visibility: visible;
+        height: 100%;
+    }
+    input[type="text"] {
+        background:whitesmoke;
+        width: 90%;
+        min-height: 4em;
+    }
+}
+
+.hidden-actions-form-container:not(:focus-within){
+
+    .add{
+        input[type="text"]{
+            margin: 0;
+            background-color: $light-bgc;
+            padding: 5px;
+            height: 2em;
+            width: 6.5em;
+            border-radius: 3px;
+        }
+        
+        
+    }
+}

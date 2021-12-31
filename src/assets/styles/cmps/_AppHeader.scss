@@ -1,0 +1,39 @@
+.app-header {
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 100%;
+    top: 0;
+    height: 200px;
+    background-color: #d8e1e7;
+    nav {
+        padding: 50px;
+        margin-bottom: 75px;
+        width: 1200px;
+        .links{
+            gap: 15px;
+        }
+        a {
+            display: flex;
+            gap: 5px;
+            color: rgb(121, 121, 121);
+            text-decoration: none;
+        }
+        .options{
+            color: rgb(121, 121, 121);
+            gap: 10px;
+            span{
+                cursor: pointer;
+                position: relative;
+                top: -20px;
+                font-size: 2.5rem;
+                font-weight: 600;
+                width: 25px;
+            }
+            svg{
+
+                cursor: pointer;
+            }
+        }
+    }
+}

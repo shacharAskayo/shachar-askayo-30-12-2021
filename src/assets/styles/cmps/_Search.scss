@@ -1,0 +1,82 @@
+.search-center-container {
+    width: 100%;
+    display: flex;
+    padding: 15px;
+    justify-content: center;
+    position: absolute;
+    z-index: 1000;
+    top: 10px;
+    .search-and-results-container {
+        background: white;
+        width: 80%;
+        padding: 10px;
+
+        border-radius: 25px;
+        border: 1px solid black;
+        // box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
+        box-shadow: $sec-shadow;
+        max-height: 455px;
+        overflow-y: auto;
+    }
+    input {
+        width: 100%;
+        padding: 5px 10px;
+        // border: 1px solid black;
+        // border-bottom: none;
+        outline: none;
+        border: none;
+        font-size: 1rem;
+        // background: rgb(87, 86, 86);
+        background: white;
+
+        &::placeholder {
+            color: rgb(87, 86, 86);
+        }
+    }
+    .results {
+        padding: 15px 0;
+        padding-right: 30px;
+
+        li {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            justify-content: space-between;
+            margin: 10px;
+            margin-bottom: 20px;
+            // background-color: white;
+            padding: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            color: rgb(87, 86, 86);
+
+            transition: background-color 0.3s;
+            &:last-child {
+                margin-bottom: 0;
+            }
+            &:hover {
+                background-color: #092a4e63;
+            }
+        }
+        // border: 1px solid black;
+        // border-top: none;
+        // border-bottom-left-radius: 30px;
+        // border-bottom-right-radius: 30px;
+    }
+}
+
+.search-and-results-container::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    // scroll-margin: 50px 0 0 50px;
+}
+/* Track */
+.search-and-results-container::-webkit-scrollbar-track {
+    background: $main-gray;
+    border-radius: 8px;
+}
+/* Handle */
+.search-and-results-container::-webkit-scrollbar-thumb {
+    background: $main-gray;
+    border-radius: 8px;
+}
