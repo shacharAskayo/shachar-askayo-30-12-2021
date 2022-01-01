@@ -58,3 +58,13 @@ export function toggleUnit() {
     }
 }
 
+export function toggleDarkMode() {
+    return async dispatch => {
+        try {
+            dispatch({ type: 'TOGGLE_DARK_MODE'})
+        } catch (err) {
+            console.log(err)
+        }
+    }
+}
+

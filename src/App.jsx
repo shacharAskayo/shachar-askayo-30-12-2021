@@ -12,6 +12,7 @@ function App() {
 
   const currWeather = useSelector(state => state.weatherReducer.currWeather)
   const favoriteLocations = useSelector(state => state.weatherReducer.favoriteLocations)
+  const isDarkMode = useSelector(state => state.weatherReducer.isDarkMode)
 
   const dispatch = useDispatch()
 
@@ -24,15 +25,25 @@ function App() {
     !favoriteLocations && dispatch(loadFavoirteLocations())
   }, [])
 
+  useEffect(() => {
+    const bodyEl = document.querySelector('body')
+    bodyEl.className = isDarkMode ? 'dark' : ''
+    return () => {
+      bodyEl.className = ''
+    }
+  }, [isDarkMode])
+
   return (
-    <div className="App">
-      <Router>
-        <AppHeader />
-        <Switch>
-          <Route exact path="/favorite" component={Favorites} />
-          <Route exact path="/" component={WeatherDetails} />
-        </Switch>
-      </Router>
+    <div className={`App-container flex justify-c `}>
+      <div className="App">
+        <Router>
+          <AppHeader />
+          <Switch>
+            <Route exact path="/favorite" component={Favorites} />
+            <Route exact path="/" component={WeatherDetails} />
+          </Switch>
+        </Router>
+      </div>
     </div>
   );
 }

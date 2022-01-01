@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Moment from 'react-moment';
 import Search from '../cmps/Search/Search'
@@ -15,9 +15,12 @@ import nightClearBg from '../assets/imgs/night-clear.jpg'
 export default function ForcastsDetails() {
 
 
+    const [isDayForcast, setIsDayForcast] = useState(true)
+
     const fullWeather = useSelector(state => state.weatherReducer.fullWeather)
     const favoriteLocations = useSelector(state => state.weatherReducer.favoriteLocations)
     const currUnit = useSelector(state => state.weatherReducer.currUnit)
+    const isDarkMode = useSelector(state => state.weatherReducer.isDarkMode)
 
     const dispatch = useDispatch()
 
@@ -41,7 +44,8 @@ export default function ForcastsDetails() {
     return (
         <div className='forcast-container flex col'
             style={{
-                background: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url(${getWeatherBackground()})`
+                background:
+                    `linear-gradient(rgba(0, 0, 0, ${isDarkMode ? 0.7 : 0.5}), rgba(0, 0, 0, ${isDarkMode ? 1 : 0.5})),url(${getWeatherBackground()})`
             }}>
             <Search favoriteLocations={favoriteLocations} dispatch={dispatch} currLocation={{ cityName: fullWeather.cityName, countryName: fullWeather.countryName }} />
             <div className="section-one flex col ">
@@ -76,8 +80,11 @@ export default function ForcastsDetails() {
                 <span className='title'>{fullWeather.fiveDaysWeather.headline.txt}</span>
                 <div className="week-forcast-container align-c flex">
                     <div className="today-weather flex align-c">
-                        <img className='weather-icon' src={fullWeather.currWeather.imgUrl} alt="" />
-                        <div className="day-and-temp flex col">
+                        <div className="weather-and-btn flex col align-s" >
+                            <img className='weather-icon' src={fullWeather.currWeather.imgUrl} alt="" />
+                            <button onClick={() => setIsDayForcast(!isDayForcast)}>{isDayForcast ? 'Day' : 'Night'}</button>
+                        </div>
+                        <div className="day-and-temp flex col" >
                             <span className='day'>Now</span>
                             <span className='temp'>
                                 {fullWeather.currWeather.temperature[currUnit]}°</span>
@@ -89,9 +96,9 @@ export default function ForcastsDetails() {
                             return (
                                 <div className="forcast-preview flex col align-c" key={day.time + Math.random(10008280)}>
                                     <Moment date={day.time} format="ddd" />
-                                    <img className='weather-icon' src={day.dayTime.imgUrl} alt="" />
+                                    <img className='weather-icon' src={isDayForcast ? day.dayTime.imgUrl : day.nightTime.imgUrl} alt="" />
                                     <span>
-                                        {day.dayTime.temperature[currUnit]}°
+                                        {isDayForcast ? day.dayTime.temperature[currUnit] : day.nightTime.temperature[currUnit]}°
                                     </span>
 
                                 </div>

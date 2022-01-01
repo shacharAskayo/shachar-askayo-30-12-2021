@@ -19,6 +19,8 @@ export function weatherReducer(state = initialState, action) {
             return { ...state, favoriteLocations: action.favoriteLocations }
         case 'TOGGLE_UNIT':
             return { ...state, currUnit: state.currUnit === 'c' ? 'f' : 'c' }
+        case 'TOGGLE_DARK_MODE':
+            return { ...state, isDarkMode: !state.isDarkMode }
         default:
             return state
     }

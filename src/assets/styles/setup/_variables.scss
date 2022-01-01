@@ -1,18 +1,17 @@
 // Colors
 $main-orange: #f79b17;
-$main-blue: #0797DF;
+$main-blue: #092a4e63;
 // $main-black: #1F1F1F;
-$main-black: #333;
+$main-bg-dark: #303030;
+$sec-bg-dark: #525252;
+$main-col-dark: rgb(121, 121, 121);
 $main-gray: #ccc;
-
-
-
 
 // Shadows
 $main-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
 $sec-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
 
 // Breakpoints
-$mobile-breakpoint: 580px;
-$narrow-breakpoint: 720px;
-$normal-breakpoint: 960px;
+$mobile-breakpoint: 680px;
+$narrow-breakpoint: 900px;
+$normal-breakpoint: 1200px;

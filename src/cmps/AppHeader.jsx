@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { toggleUnit } from '../store/actions/weatherActions'
+import { toggleDarkMode, toggleUnit } from '../store/actions/weatherActions'
 import HomeIcon from '@material-ui/icons/Home';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import SettingsBrightnessIcon from '@material-ui/icons/SettingsBrightness';
@@ -29,7 +29,7 @@ export default function AppHeader() {
                     </Link>
                 </div>
                 <div className="options flex align-c">
-                    <SettingsBrightnessIcon/>
+                    <SettingsBrightnessIcon onClick={() => dispatch(toggleDarkMode())}/>
                     <span onClick={() => dispatch(toggleUnit())}> {currUnit}</span>
                 </div>
             </nav>

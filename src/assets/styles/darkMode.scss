@@ -1,0 +1,33 @@
+body {
+    &.dark {
+        background-color: $sec-bg-dark;
+        .app-header {
+            background-color: $main-bg-dark;
+        }
+        .forcast-container {
+            color: $main-col-dark;
+        }
+        .search-center-container {
+            .search-and-results-container {
+                background-color: $main-bg-dark;
+                color: $main-col-dark;
+                input {
+                    color: $main-col-dark;
+                    &::placeholder {
+                        color: $main-col-dark;
+                    }
+                }
+            }
+        }
+        
+        .MuiPaper-root {
+            background-color: $main-bg-dark;
+        }
+        .MuiTableCell-root{
+            background-color: $main-bg-dark;
+            border-bottom: 1px solid $sec-bg-dark;
+            // border-bottom: 1px solid $main-col-dark;
+            color: $main-col-dark;
+        }
+    }
+}

@@ -27,7 +27,8 @@
         border: none;
         font-size: 1rem;
         // background: rgb(87, 86, 86);
-        background: white;
+        // background: white;
+        background: inherit;
 
         &::placeholder {
             color: rgb(87, 86, 86);

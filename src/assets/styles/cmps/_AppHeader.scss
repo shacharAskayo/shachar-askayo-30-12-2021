@@ -37,3 +37,32 @@
         }
     }
 }
+
+
+@media (max-width: $normal-breakpoint) {
+.app-header{
+    // position: unset;
+    nav{
+        width: 900px;
+    }
+}
+
+}
+@media (max-width: $narrow-breakpoint) {
+.app-header{
+    // position: unset;
+    nav{
+        width: 600px;
+    }
+}
+
+}
+@media (max-width: $mobile-breakpoint) {
+.app-header{
+    position: unset;
+    nav{
+        width: unset;
+    }
+}
+
+}

@@ -8,8 +8,8 @@ export default function ForcastDetailsKeletonLoading() {
         <div className='forcast-container flex col'>
 
             <div className='search-center-container flex' >
-                <div className="search-and-results-container" style={{ boxShadow: 'none', border: 'none',background:'none' }}>
-                    <Skeleton animation="wave" style={{ width: '100%',borderRadius:20 }} height={65} />
+                <div className="search-and-results-container" style={{ boxShadow: 'none', border: 'none', background: 'none' }}>
+                    <Skeleton animation="wave" style={{ width: '100%', borderRadius: 20 }} height={65} />
                 </div>
             </div>
             <div className="section-one flex col ">
@@ -36,8 +36,12 @@ export default function ForcastDetailsKeletonLoading() {
                 <Skeleton className='title' animation="wave" width={500} height={25} />
 
                 <div className="week-forcast-container align-c flex">
-                    <div className="today-weather flex align-c">
-                        <Skeleton className='weather-icon' animation="wave" variant='circular' style={{ marginRight: 15 }} width={60} height={60} />
+                    <div className="today-weather flex align-c" style={{ marginTop: 30 }}>
+                        <div className="flex col" style={{ marginTop: '-40px' }}>
+
+                            <Skeleton className='weather-icon' animation="wave" variant='circular' style={{ marginRight: 15 }} width={60} height={60} />
+                            <Skeleton className='temp' animation="wave" width={80} height={45} />
+                        </div>
 
                         <div className="day-and-temp flex col">
                             <Skeleton className='day' animation="wave" width={65} height={25} />
