@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/shachar-askayo-30-12-2021/static/css/main.f731a2b1.css",
-    "main.js": "/shachar-askayo-30-12-2021/static/js/main.76e874b1.js",
+    "main.css": "/shachar-askayo-30-12-2021/static/css/main.550116fb.css",
+    "main.js": "/shachar-askayo-30-12-2021/static/js/main.0a9c3e73.js",
     "static/media/night-clear.jpg": "/shachar-askayo-30-12-2021/static/media/night-clear.f202e5df8fc6266e2130.jpg",
     "static/media/day-clear.jpg": "/shachar-askayo-30-12-2021/static/media/day-clear.6950452346bc4bf1e7ea.jpg",
     "static/media/night-cloudy.jpg": "/shachar-askayo-30-12-2021/static/media/night-cloudy.bfa62645b5a52468a6ce.jpg",
     "static/media/day-cloudy.jpg": "/shachar-askayo-30-12-2021/static/media/day-cloudy.471ca37cfe438c699982.jpg",
     "index.html": "/shachar-askayo-30-12-2021/index.html",
-    "main.f731a2b1.css.map": "/shachar-askayo-30-12-2021/static/css/main.f731a2b1.css.map",
-    "main.76e874b1.js.map": "/shachar-askayo-30-12-2021/static/js/main.76e874b1.js.map"
+    "main.550116fb.css.map": "/shachar-askayo-30-12-2021/static/css/main.550116fb.css.map",
+    "main.0a9c3e73.js.map": "/shachar-askayo-30-12-2021/static/js/main.0a9c3e73.js.map"
   },
   "entrypoints": [
-    "static/css/main.f731a2b1.css",
-    "static/js/main.76e874b1.js"
+    "static/css/main.550116fb.css",
+    "static/js/main.0a9c3e73.js"
   ]
 }
