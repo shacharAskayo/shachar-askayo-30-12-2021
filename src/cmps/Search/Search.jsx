@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import autoCompleteService from '../../services/autoCompleteService';
+import weatherService from '../../services/weatherService';
 import { loadEmptyWeather, loadWeather } from '../../store/actions/weatherActions';
 import SearchResultsList from './SearchResultsList';
 var _ = require('lodash');
@@ -15,7 +15,8 @@ export default function Search({ favoriteLocations, dispatch, currLocation }) {
     const handleChange = async ({ target }) => {
         const { value } = target
         if (value.length > 0 && value.split('').every(val => englishAlphabet.includes(val.toLowerCase()))) {
-            const autoCompleteResults = await autoCompleteService.getAutoCompleteResults(value)
+            const autoCompleteResults = await weatherService.getAutoCompleteResults(value)
+            console.log('autoCompleteResults',autoCompleteResults);
             setResults(autoCompleteResults)
         }
         else setResults(null)

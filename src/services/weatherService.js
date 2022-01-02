@@ -1,4 +1,5 @@
 import Axios from 'axios'
+import attachmentService from './attachmentService'
 import utilsService from './utilsService'
 
 var axios = Axios.create({
@@ -11,7 +12,8 @@ export default {
     getLocationByCords,
     getFullWeather,
     loadFavoirteLocations,
-    toggleFavorite
+    toggleFavorite,
+    getAutoCompleteResults,
 }
 
 async function getLocationByCords(lat, lon) {
@@ -46,6 +48,7 @@ async function getFullWeather(locationKey, cityName, countryName) {
             locationKey,
             cityName,
             countryName,
+            attachment: attachmentService.loadAttachment(cityName, countryName),
             backgroundImg: utilsService.getImgByWeatherState(currTime, Temperature.Metric.Value),
             currWeather: {
                 time: currTime,
@@ -108,6 +111,28 @@ function loadFavoirteLocations() {
     else return []
 }
 
+
+async function getAutoCompleteResults(txt) {
+    const storgedAutoComplete = JSON.parse(localStorage.getItem('locations')) || []
+    const storgedMatches = storgedAutoComplete?.filter(location => location.LocalizedName.toLowerCase().startsWith(txt.toLowerCase()))
+    if (storgedMatches && storgedMatches.length > 0) return storgedMatches
+    else {
+        try {
+            const autoCompleteResults = await axios.get(`https://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${API_KEY}&q=${txt}`)
+            if (autoCompleteResults.data?.length > 0) {
+                if (storgedAutoComplete.length > 0) {
+                    autoCompleteResults.data.map(location => storgedAutoComplete.every(loc => loc.LocalizedName !== location.LocalizedName) ? storgedAutoComplete.push(location) : null)
+                    localStorage.setItem('locations', JSON.stringify(storgedAutoComplete))
+                } else {
+                    localStorage.setItem('locations', JSON.stringify(autoCompleteResults.data))
+                }
+                return JSON.parse(JSON.stringify(autoCompleteResults.data))
+            }
+        } catch (err) { console.log('Error in getAutoCompleteResults in autoCompleteService ., Error:', err); }
+    }
+}
+
+
 function toggleFavorite(favoriteObj) {
     const storedFavoriteLocations = loadFavoirteLocations()
     if (storedFavoriteLocations.some(location => location.cityName === favoriteObj.cityName && location.countryName === favoriteObj.countryName)) {
@@ -122,17 +147,21 @@ function toggleFavorite(favoriteObj) {
 }
 
 
+
+
 async function _getCurrWeather(locationKey) {
     try {
-        const currWeather = await axios.get(`http://dataservice.accuweather.com/currentconditions/v1/${locationKey}?apikey=${API_KEY}`)
+        const currWeather = await axios.get(`https://dataservice.accuweather.com/currentconditions/v1/${locationKey}?apikey=${API_KEY}`)
         if (currWeather.data) return currWeather.data[0]
     } catch (err) { console.log('Error in _getCurrWeather in weatherService ., Error:', err); }
 }
 
 async function _getFiveDayWeather(locationKey) {
     try {
-        const fiveDaysWeather = await axios.get(`http://dataservice.accuweather.com/forecasts/v1/daily/5day/${locationKey}?apikey=${API_KEY}`)
+        const fiveDaysWeather = await axios.get(`https://dataservice.accuweather.com/forecasts/v1/daily/5day/${locationKey}?apikey=${API_KEY}`)
         if (fiveDaysWeather.data) return fiveDaysWeather.data
     } catch (err) { console.log('Error in _getFiveDayWeather in weatherService ., Error:', err); }
 }
+
+
 

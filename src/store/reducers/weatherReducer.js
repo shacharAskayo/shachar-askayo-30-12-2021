@@ -10,6 +10,8 @@ export function weatherReducer(state = initialState, action) {
     switch (action.type) {
         case 'LOAD_FULL_WEATHER':
             return { ...state, fullWeather: action.fullWeather }
+        case 'UPDATE_FULL_WEATHER':
+            return { ...state, fullWeather: action.updatedFullWeather }
         case 'LOAD_EMPTY_WEATHER':
             return { ...state, fullWeather: null }
         case 'LOAD_FAVORITE_LOCATIONS':

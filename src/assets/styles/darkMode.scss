@@ -23,7 +23,21 @@ body {
                 }
             }
         }
-        
+        .attachments-container {
+            color: $main-col-dark;
+            input {
+                color: $main-col-dark;
+                background-color: $main-bg-dark;
+
+                &::placeholder {
+                    color: $main-col-dark;
+                }
+            }
+            .post-preview{
+            color: $main-col-dark;
+
+            }
+        }
         .MuiPaper-root {
             background-color: $main-bg-dark;
         }
@@ -36,6 +50,10 @@ body {
         .MuiToolbar-root{
             
             color: $main-col-dark;
+        }
+        button{
+            color: $main-col-dark;
+
         }
     }
 }

@@ -16,6 +16,7 @@ import dayClearBg from '../assets/imgs/day-clear.jpg'
 import dayCloudyBg from '../assets/imgs/day-cloudy.jpg'
 import nightCloudyBg from '../assets/imgs/night-cloudy.jpg'
 import nightClearBg from '../assets/imgs/night-clear.jpg'
+import AttachmentPosts from '../cmps/AttachmentPosts';
 
 
 export default function WeatherDetails() {
@@ -83,6 +84,8 @@ export default function WeatherDetails() {
                         </div>
 
                     </div>
+                    <AttachmentPosts dispatch={dispatch} fullWeather={fullWeather} />
+
                 </div>
                 <div className="section-two">
                     <span className='title'>{fullWeather.fiveDaysWeather.headline.txt}</span>
@@ -100,22 +103,23 @@ export default function WeatherDetails() {
                         </div>
                         <FadeIn className="forcast-list-container flex justify-sb">
 
-                                {fullWeather.fiveDaysWeather.forcast.map(day => {
-                                    return (
-                                        <div className="forcast-preview flex col align-c" key={day.time + Math.random(10008280)}>
-                                            <Moment date={day.time} format="ddd" />
-                                            <img className='weather-icon' src={isDayForcast ? day.dayTime.imgUrl : day.nightTime.imgUrl} alt="" />
-                                            <span>
-                                                {isDayForcast ? day.dayTime.temperature[currUnit] : day.nightTime.temperature[currUnit]}°
-                                            </span>
+                            {fullWeather.fiveDaysWeather.forcast.map(day => {
+                                return (
+                                    <div className="forcast-preview flex col align-c" key={day.time + Math.random(10008280)}>
+                                        <Moment date={day.time} format="ddd" />
+                                        <img className='weather-icon' src={isDayForcast ? day.dayTime.imgUrl : day.nightTime.imgUrl} alt="" />
+                                        <span>
+                                            {isDayForcast ? day.dayTime.temperature[currUnit] : day.nightTime.temperature[currUnit]}°
+                                        </span>
 
-                                        </div>
-                                    )
-                                })}
+                                    </div>
+                                )
+                            })}
                         </FadeIn>
                     </div>
                 </div>
             </div>
+
         </div>
     )
 }

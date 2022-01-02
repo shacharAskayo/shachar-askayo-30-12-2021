@@ -1,3 +1,4 @@
+import attachmentService from '../../services/attachmentService.js'
 import weatherService from '../../services/weatherService.js'
 
 export function loadWeather(locationKey, cityName, countryName) {
@@ -43,6 +44,17 @@ export function toggleFavorite(fullWeatherObj) {
             return favoriteLocations
         } catch (err) {
             console.log('Error in weatherAction in toggleFavorite function', err)
+        }
+    }
+}
+
+export function addAttachmentPost(fullWeatherObj,post) {
+    return async dispatch => {
+        try {
+            const updatedFullWeather = attachmentService.addAttachmentPost(fullWeatherObj,post)
+            dispatch({ type: 'UPDATE_FULL_WEATHER', updatedFullWeather })
+        } catch (err) {
+            console.log('Error in weatherAction in addAttachmentPost function', err)
         }
     }
 }

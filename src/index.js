@@ -36,3 +36,20 @@ serviceWorker.unregister();
   }
 })()
 */
+
+
+const attachments = [
+  // {
+  //   id:'l1',
+  //   cityName: 'Ban Khai',
+  //   contryName: 'Thailand',
+  //   posts: [
+  //     {
+  //       id:'l1p1',
+  //       title: 'Awsome Trip!!',
+  //       img: 'https://res.cloudinary.com/askayo/image/upload/v1627328785/glezhrordq9a3jmc578c.jpg'
+  //     }
+  //   ]
+  // }
+]
+

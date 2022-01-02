@@ -10,6 +10,7 @@ import TableRow from '@mui/material/TableRow';
 import { useDispatch, useSelector } from 'react-redux';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import { loadEmptyWeather, loadWeather, toggleFavorite } from '../store/actions/weatherActions';
+import Map from '../cmps/Map';
 
 const columns = [
     { id: 'cityName', label: 'City', minWidth: 170, align: 'center', },
@@ -122,6 +123,8 @@ if(!favoriteLocations) return null
                 onRowsPerPageChange={handleChangeRowsPerPage}
             />
             </Paper>
+
+            <Map/>
         </div>
 
     );

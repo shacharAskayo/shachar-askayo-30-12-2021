@@ -34,7 +34,6 @@ function App() {
   const onGeoLocationSucces = async (pos) => {
     const { latitude, longitude } = pos.coords
     const currLocation = await weatherService.getLocationByCords(latitude, longitude)
-    // const currLocation = null
     if (currLocation) {
       const { locationKey, cityName, countryName } = currLocation
       handleLoadWeather(locationKey, cityName, countryName)
@@ -43,10 +42,8 @@ function App() {
   }
 
   const handleLoadWeather = async (locationKey, cityName, countryName) => {
-    // setTimeout(async() => {
       const errMsg = await dispatch(loadWeather(locationKey, cityName, countryName))
       errMsg && onOpenModal(errMsg)
-    // }, 2000);
   }
 
   const onOpenModal = (errMsg) => {

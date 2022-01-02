@@ -12,15 +12,22 @@ export default {
 }
 
 async function getAutoCompleteResults(txt) {
-    const storgedMatchs = storageService.query('locations',txt)
-    if (storgedMatchs && storgedMatchs.length > 0) return storgedMatchs
+    const storgedAutoComplete = JSON.parse(localStorage.getItem('locations'))
+    const storgedMatches = storgedAutoComplete.filter(location => location.LocalizedName.toLowerCase().startsWith(txt.toLowerCase()))
+    if (storgedMatches && storgedMatches.length > 0) return storgedMatches
     else {
         try {
-            const autoCompleteResults = await axios.get(`http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${API_KEY}&q=${txt}`)
+            const autoCompleteResults = await axios.get(`https://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${API_KEY}&q=${txt}`)
             if (autoCompleteResults.data?.length > 0) {
-                storageService.addAutoCompleteLocations('locations',autoCompleteResults.data)
+                if (storgedAutoComplete.length > 0) {
+                    autoCompleteResults.map(location => storgedAutoComplete.every(loc => loc.LocalizedName !== location.LocalizedName) ? storgedAutoComplete.push(location) : null)
+                    localStorage.setItem('locations', JSON.stringify(storgedAutoComplete))
+                } else {
+                    localStorage.setItem('locations', JSON.stringify(autoCompleteResults))
+                }
                 return JSON.parse(JSON.stringify(autoCompleteResults.data))
             }
         } catch (err) { console.log('Error in getAutoCompleteResults in autoCompleteService ., Error:', err); }
     }
 }
+

@@ -15,6 +15,7 @@
 @import "cmps/AppHeader";
 @import "cmps/SnackBar";
 @import "cmps/Search";
+@import "cmps/Attachments";
 
 * {
     box-sizing: border-box;
@@ -37,6 +38,7 @@ body {
     width: 1200px;
     min-height: 100%;
     // display: flex;
+    // .forcast-container{}
 }
 
 .page {
@@ -117,6 +119,7 @@ button {
     .page {
         padding: 0;
         margin-top: 0;
+        height: 100%;
     }
     .MuiPaper-root {
         width: unset !important;
