@@ -18,7 +18,7 @@ export default {
 
 async function getLocationByCords(lat, lon) {
     try {
-        const currLocation = await axios.get(`http://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=${API_KEY}&q=${lat},${lon}`)
+        const currLocation = await axios.get(`https://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=${API_KEY}&q=${lat},${lon}`)
         if (currLocation?.data) {
             const { Key, LocalizedName, Country } = currLocation.data
             return {
