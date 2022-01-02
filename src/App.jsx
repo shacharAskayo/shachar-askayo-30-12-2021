@@ -11,43 +11,17 @@ import SnackBar from './cmps/SnackBar';
 
 function App() {
 
-  const fullWeather = useSelector(state => state.weatherReducer.fullWeather)
-  const favoriteLocations = useSelector(state => state.weatherReducer.favoriteLocations)
-  const isDarkMode = useSelector(state => state.weatherReducer.isDarkMode)
+  const isDarkMode = useSelector(state => state.isDarkMode)
   const [snackBarContent, setSnackBarContent] = useState(null)
+  const [modalTimeOut, setModalTimeOut] = useState(null)
 
   const dispatch = useDispatch()
 
-
   useEffect(async () => {
-    var currTime;
-    // if (!fullWeather) {
-    //   navigator.geolocation.getCurrentPosition(async (pos) => {
-    //     const { latitude, longitude } = pos.coords
-    //     const currLocation = await weatherService.getLocationByCords(latitude, longitude)
-    //     if (currLocation) {
-    //       const { locationKey, cityName, countryName } = currLocation
-    //       dispatch(loadWeather(locationKey, cityName, countryName))
-    //     }
-    //     else {
-    //       dispatch(loadWeather('215854', 'Tel Aviv', 'Israel'))
-    //     }
-    //   })
-    // }
-    if (!fullWeather) {
-      // setTimeout(async () => {
-      const errMsg = await dispatch(loadWeather('', ' ', ''))
-      if (errMsg) {
-        setSnackBarContent(errMsg)
-        currTime = setTimeout(() => {
-          setSnackBarContent(null)
-        }, 5000);
-      }
-      // }, 2000);
-    }
-    !favoriteLocations && dispatch(loadFavoirteLocations())
+    navigator.geolocation.getCurrentPosition(onGeoLocationSucces, () => handleLoadWeather('215854', 'Tel Aviv', 'Israel'))
+    dispatch(loadFavoirteLocations())
     return () => {
-      clearTimeout(currTime)
+      modalTimeOut && clearTimeout(modalTimeOut)
     }
   }, [])
 
@@ -55,6 +29,32 @@ function App() {
     const bodyEl = document.querySelector('body')
     bodyEl.className = isDarkMode ? 'dark' : ''
   }, [isDarkMode])
+
+
+  const onGeoLocationSucces = async (pos) => {
+    const { latitude, longitude } = pos.coords
+    const currLocation = await weatherService.getLocationByCords(latitude, longitude)
+    // const currLocation = null
+    if (currLocation) {
+      const { locationKey, cityName, countryName } = currLocation
+      handleLoadWeather(locationKey, cityName, countryName)
+    }
+    else { handleLoadWeather('215854', 'Tel Aviv', 'Israel') }
+  }
+
+  const handleLoadWeather = async (locationKey, cityName, countryName) => {
+    // setTimeout(async() => {
+      const errMsg = await dispatch(loadWeather(locationKey, cityName, countryName))
+      errMsg && onOpenModal(errMsg)
+    // }, 2000);
+  }
+
+  const onOpenModal = (errMsg) => {
+    setSnackBarContent(errMsg)
+    setModalTimeOut(
+      setTimeout(() => setSnackBarContent(null), 5000)
+    )
+  }
 
   return (
     <div className='app-container flex justify-c '>

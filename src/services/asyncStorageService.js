@@ -1,14 +1,13 @@
 
 
-const ENTITY_TYPE = 'locations'
 export const storageService = {
-    autocompleteQuery,
+    query,
     addAutoCompleteLocations
 }
 
 
-function autocompleteQuery(filterBy = null) {
-    var locations = JSON.parse(localStorage.getItem(ENTITY_TYPE)) || []
+function query(entityType,filterBy = null) {
+    var locations = JSON.parse(localStorage.getItem(entityType)) || []
     if (locations && locations.length > 0) {
         if (filterBy) {
             return locations.filter(location => location.LocalizedName.toLowerCase().startsWith(filterBy.toLowerCase()))
@@ -18,13 +17,13 @@ function autocompleteQuery(filterBy = null) {
     } else return []
 }
 
-function addAutoCompleteLocations(newLocations) {
-    var storgedLocations = autocompleteQuery()
+function addAutoCompleteLocations(entityType,newLocations) {
+    var storgedLocations = query(entityType)
     if (storgedLocations.length > 0) {
-        newLocations.map(location => !storgedLocations.some(loc => loc.LocalizedName === location.LocalizedName) ? storgedLocations.push(location) : null)
-        _save(ENTITY_TYPE, storgedLocations)
+        newLocations.map(location => storgedLocations.every(loc => loc.LocalizedName !== location.LocalizedName) ? storgedLocations.push(location) : null)
+        _save(entityType, storgedLocations)
     } else {
-        _save(ENTITY_TYPE, newLocations)
+        _save(entityType, newLocations)
     }
 }
 

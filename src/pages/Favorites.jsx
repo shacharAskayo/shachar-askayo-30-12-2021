@@ -30,7 +30,7 @@ const columns = [
     },
     {
         id: 'favorite',
-        label: 'favoirte',
+        label: 'Favorite',
         minWidth: 170,
         align: 'center',
         format: (value) => value.toFixed(2),
@@ -43,8 +43,8 @@ export default function Favorites({ history }) {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
-    const favoriteLocations = useSelector(state => state.weatherReducer.favoriteLocations)
-    const currUnit = useSelector(state => state.weatherReducer.currUnit)
+    const favoriteLocations = useSelector(state => state.favoriteLocations)
+    const currUnit = useSelector(state => state.currUnit)
     const dispatch = useDispatch()
 
     const handleChangePage = (event, newPage) => {

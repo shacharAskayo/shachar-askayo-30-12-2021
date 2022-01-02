@@ -12,20 +12,15 @@ export default {
 }
 
 async function getAutoCompleteResults(txt) {
-    const storgedMatchs = storageService.autocompleteQuery(txt)
+    const storgedMatchs = storageService.query('locations',txt)
     if (storgedMatchs && storgedMatchs.length > 0) return storgedMatchs
     else {
-        // try {
-        //     const autoCompleteResults = await axios.get(`http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${API_KEY}&q=${txt}`)
-        //     if (autoCompleteResults.data?.length > 0) {
-        //         // const locationsNamesMap = autoCompleteResults.data.map(location => location.LocalizedName)
-        //         storageService.addAutoCompleteLocations(autoCompleteResults.data)
-        //         return JSON.parse(JSON.stringify(autoCompleteResults.data))
-        //     }
-        // } catch (err) { console.log('Error in getAutoCompleteResults in autoCompleteService ., Error:', err); }
+        try {
+            const autoCompleteResults = await axios.get(`http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${API_KEY}&q=${txt}`)
+            if (autoCompleteResults.data?.length > 0) {
+                storageService.addAutoCompleteLocations('locations',autoCompleteResults.data)
+                return JSON.parse(JSON.stringify(autoCompleteResults.data))
+            }
+        } catch (err) { console.log('Error in getAutoCompleteResults in autoCompleteService ., Error:', err); }
     }
 }
-
-
-
-// const url = 'https://dataservice.accuweather.com/locations/v1/cities/search';

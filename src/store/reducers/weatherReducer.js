@@ -1,5 +1,4 @@
 
-
 const initialState = {
     fullWeather: null,
     favoriteLocations: null,

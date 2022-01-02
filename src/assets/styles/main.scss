@@ -9,6 +9,7 @@
 
 //Pages
 @import "pages/WeatherDetails";
+@import "pages/Favorites";
 
 // Cmps
 @import "cmps/AppHeader";
@@ -67,6 +68,8 @@ body {
         }
     }
 }
+
+
 
 li {
     margin: 0;

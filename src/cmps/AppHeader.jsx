@@ -9,7 +9,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 
 export default function AppHeader() {
     const dispatch = useDispatch()
-    const currUnit = useSelector(state => state.weatherReducer.currUnit)
+    const currUnit = useSelector(state => state.currUnit)
     const [isMenuOpen, setIsMenuOpen] = useState(false)
 
     return (
@@ -26,7 +26,7 @@ export default function AppHeader() {
                     <Link to='/favorite'>
                         <FavoriteIcon />
                         <span>
-                            favorite
+                            Favorite
                         </span>
                     </Link>
                 </div>

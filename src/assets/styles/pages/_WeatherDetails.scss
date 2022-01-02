@@ -100,18 +100,17 @@
     .forcast-container {
         .section-one {
             height: unset;
-            
         }
         .section-two {
             height: unset;
-            .title{
+            .title {
                 margin-top: unset;
                 position: unset;
                 margin-bottom: 50px;
             }
-            .week-forcast-container{
+            .week-forcast-container {
                 flex-direction: column;
-                .today-weather{
+                .today-weather {
                     margin-bottom: 20px;
                     margin-right: 0;
                 }
@@ -124,19 +123,18 @@
     .forcast-container {
         .section-one {
             height: unset;
-            
         }
         .section-two {
             height: unset;
             padding-right: 0;
             padding-left: 0;
-            .title{
+            .title {
                 padding: 0 10px;
                 margin-top: unset;
             }
-            .week-forcast-container{
+            .week-forcast-container {
                 flex-direction: column;
-                .today-weather{
+                .today-weather {
                     margin-bottom: 50px;
                     margin-right: 0;
                 }
@@ -148,18 +146,22 @@
 @media (max-width: $mobile-breakpoint) {
     .forcast-container {
         border-radius: 0;
-        
-        .section-one{
+
+        .section-one {
             padding-left: 20px;
             padding-right: 20px;
         }
-        .section-two{
+        .section-two {
             padding-left: 20px;
             padding-right: 20px;
+            .title-skeleton {
+                width: 300px !important;
+            }
+
             .forcast-list-container {
                 flex-direction: column;
             }
-            .today-weather{
+            .today-weather {
                 width: unset !important;
             }
         }

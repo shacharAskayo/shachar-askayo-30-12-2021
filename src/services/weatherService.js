@@ -1,7 +1,6 @@
 import Axios from 'axios'
 import utilsService from './utilsService'
 
-
 var axios = Axios.create({
     withCredentials: false
 })
@@ -15,13 +14,9 @@ export default {
     toggleFavorite
 }
 
-
-
-
 async function getLocationByCords(lat, lon) {
     try {
         const currLocation = await axios.get(`http://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=${API_KEY}&q=${lat},${lon}`)
-        console.log(currLocation);
         if (currLocation?.data) {
             const { Key, LocalizedName, Country } = currLocation.data
             return {
@@ -93,16 +88,16 @@ async function getFullWeather(locationKey, cityName, countryName) {
             }
         }
         localStorage.setItem('fullWeather', JSON.stringify(fullWeatherObj))
-        return { fullWeather:fullWeatherObj, errMsg: null }
+        return { fullWeather: fullWeatherObj, errMsg: null }
     }
     else {
         var storedFullWeather = JSON.parse(localStorage.getItem('fullWeather'))
-        if (storedFullWeather) return { fullWeather:storedFullWeather, errMsg: `Could'nt load updated weather, showing last weather saved ` }
+        if (storedFullWeather) return { fullWeather: storedFullWeather, errMsg: `Could'nt load updated weather, showing last weather saved ` }
         // else return utilsService.getFakeWeather
     }
     // }
     // else {
-    //     return storedFullWeather
+    //     return  {fullWeather:storedFullWeather, errMsg: null }
     // }
 }
 
@@ -115,12 +110,12 @@ function loadFavoirteLocations() {
 
 function toggleFavorite(favoriteObj) {
     const storedFavoriteLocations = loadFavoirteLocations()
-    if (storedFavoriteLocations.every(location => location.cityName !== favoriteObj.cityName && location.countryName !== favoriteObj.countryName)) {
-        storedFavoriteLocations.push(favoriteObj)
-    }
-    else {
+    if (storedFavoriteLocations.some(location => location.cityName === favoriteObj.cityName && location.countryName === favoriteObj.countryName)) {
         const idx = storedFavoriteLocations.findIndex(location => location.cityName === favoriteObj.cityName && location.countryName === favoriteObj.countryName)
         storedFavoriteLocations.splice(idx, 1)
+    }
+    else {
+        storedFavoriteLocations.push(favoriteObj)
     }
     localStorage.setItem('favoriteLocations', JSON.stringify(storedFavoriteLocations))
     return storedFavoriteLocations

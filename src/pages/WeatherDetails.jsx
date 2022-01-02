@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import Moment from 'react-moment';
+import FadeIn from 'react-fade-in';
 
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
@@ -15,27 +16,26 @@ import dayClearBg from '../assets/imgs/day-clear.jpg'
 import dayCloudyBg from '../assets/imgs/day-cloudy.jpg'
 import nightCloudyBg from '../assets/imgs/night-cloudy.jpg'
 import nightClearBg from '../assets/imgs/night-clear.jpg'
-import SnackBar from '../cmps/SnackBar';
 
 
 export default function WeatherDetails() {
 
     const [isDayForcast, setIsDayForcast] = useState(true)
 
-    const fullWeather = useSelector(state => state.weatherReducer.fullWeather)
-    const favoriteLocations = useSelector(state => state.weatherReducer.favoriteLocations)
-    const currUnit = useSelector(state => state.weatherReducer.currUnit)
-    const isDarkMode = useSelector(state => state.weatherReducer.isDarkMode)
+    const fullWeather = useSelector(state => state.fullWeather)
+    const favoriteLocations = useSelector(state => state.favoriteLocations)
+    const currUnit = useSelector(state => state.currUnit)
+    const isDarkMode = useSelector(state => state.isDarkMode)
 
     const dispatch = useDispatch()
-    
+
     const onToggleFavorite = () => {
         const { cityName, countryName, locationKey, currWeather } = fullWeather
         const { temperature, imgUrl } = currWeather
         const favoriteObj = { cityName, countryName, locationKey, temperature, imgUrl }
         dispatch(toggleFavorite(favoriteObj))
     }
-    
+
     const getWeatherBackground = () => {
         if (fullWeather.backgroundImg === 'day-clear') return dayClearBg
         if (fullWeather.backgroundImg === 'day-cloud') return dayCloudyBg
@@ -47,7 +47,6 @@ export default function WeatherDetails() {
         <ForcastDetailsKeletonLoading />
     )
 
-    
     return (
         <div className="page">
 
@@ -75,7 +74,7 @@ export default function WeatherDetails() {
                             </span>
                         </div>
                         <div className="location-name flex col align-e">
-                            {favoriteLocations?.some(location => location.cityName === fullWeather.cityName) ?
+                            {favoriteLocations?.some(location => location.cityName === fullWeather.cityName && location.countryName === fullWeather.countryName) ?
                                 <FavoriteIcon className='favorite-icon' onClick={onToggleFavorite} /> :
                                 <FavoriteBorderIcon className='favorite-icon' onClick={onToggleFavorite} />
                             }
@@ -99,21 +98,21 @@ export default function WeatherDetails() {
                                     {fullWeather.currWeather.temperature[currUnit]}°</span>
                             </div>
                         </div>
-                        <div className="forcast-list-container flex justify-sb">
+                        <FadeIn className="forcast-list-container flex justify-sb">
 
-                            {fullWeather.fiveDaysWeather.forcast.map(day => {
-                                return (
-                                    <div className="forcast-preview flex col align-c" key={day.time + Math.random(10008280)}>
-                                        <Moment date={day.time} format="ddd" />
-                                        <img className='weather-icon' src={isDayForcast ? day.dayTime.imgUrl : day.nightTime.imgUrl} alt="" />
-                                        <span>
-                                            {isDayForcast ? day.dayTime.temperature[currUnit] : day.nightTime.temperature[currUnit]}°
-                                        </span>
+                                {fullWeather.fiveDaysWeather.forcast.map(day => {
+                                    return (
+                                        <div className="forcast-preview flex col align-c" key={day.time + Math.random(10008280)}>
+                                            <Moment date={day.time} format="ddd" />
+                                            <img className='weather-icon' src={isDayForcast ? day.dayTime.imgUrl : day.nightTime.imgUrl} alt="" />
+                                            <span>
+                                                {isDayForcast ? day.dayTime.temperature[currUnit] : day.nightTime.temperature[currUnit]}°
+                                            </span>
 
-                                    </div>
-                                )
-                            })}
-                        </div>
+                                        </div>
+                                    )
+                                })}
+                        </FadeIn>
                     </div>
                 </div>
             </div>

@@ -4,6 +4,7 @@ import { loadEmptyWeather, loadWeather } from '../../store/actions/weatherAction
 import SearchResultsList from './SearchResultsList';
 var _ = require('lodash');
 
+var englishAlphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 export default function Search({ favoriteLocations, dispatch, currLocation }) {
 
     const [results, setResults] = useState(null)
@@ -13,7 +14,7 @@ export default function Search({ favoriteLocations, dispatch, currLocation }) {
 
     const handleChange = async ({ target }) => {
         const { value } = target
-        if (value.length > 0) {
+        if (value.length > 0 && value.split('').every(val => englishAlphabet.includes(val.toLowerCase()))) {
             const autoCompleteResults = await autoCompleteService.getAutoCompleteResults(value)
             setResults(autoCompleteResults)
         }
