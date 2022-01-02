@@ -6,11 +6,15 @@
     top: 0;
     height: 200px;
     background-color: #d8e1e7;
+    .menu-icon {
+        display: none;
+        font-size: 2rem;
+    }
     nav {
         padding: 50px;
         margin-bottom: 75px;
         width: 1200px;
-        .links{
+        .links {
             gap: 15px;
         }
         a {
@@ -19,10 +23,10 @@
             color: rgb(121, 121, 121);
             text-decoration: none;
         }
-        .options{
+        .options {
             color: rgb(121, 121, 121);
             gap: 10px;
-            span{
+            span {
                 cursor: pointer;
                 position: relative;
                 top: -20px;
@@ -30,39 +34,65 @@
                 font-weight: 600;
                 width: 25px;
             }
-            svg{
-
+            svg {
                 cursor: pointer;
             }
         }
     }
 }
 
-
 @media (max-width: $normal-breakpoint) {
-.app-header{
-    // position: unset;
-    nav{
-        width: 900px;
+    .app-header {
+        // position: unset;
+        nav {
+            width: 900px;
+        }
     }
-}
-
 }
 @media (max-width: $narrow-breakpoint) {
-.app-header{
-    // position: unset;
-    nav{
-        width: 600px;
+    .app-header {
+        // position: unset;
+        nav {
+            width: 600px;
+        }
     }
-}
-
 }
 @media (max-width: $mobile-breakpoint) {
-.app-header{
-    position: unset;
-    nav{
-        width: unset;
+    .app-header {
+        position: unset;
+        height: 80px;
+        align-items: center;
+        justify-content: flex-start;
+        padding-left: 10px;
+        .menu-icon {
+            display: block;
+        }
+        nav {
+            padding: 0;
+            margin-bottom: 0;
+            width: unset;
+            position: absolute;
+            top: -300px;
+            z-index: 1000;
+            left: 0;
+            right: 0;
+            width: 100%;
+            background: white;
+            border-bottom-right-radius: 10px;
+            border-bottom-left-radius: 10px;
+            transition: all 0.3s;
+            align-items: flex-start;
+            padding: 20px;
+            padding-bottom: 10px;
+            .links {
+                flex-direction: column;
+            }
+            .options {
+                flex-direction: column;
+            }
+            &.open {
+                top: 80px;
+            }
+        }
     }
-}
-
 }

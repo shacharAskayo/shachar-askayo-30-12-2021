@@ -5,6 +5,8 @@ import Search from './Search/Search';
 
 export default function ForcastDetailsKeletonLoading() {
     return (
+        <div className="page">
+
         <div className='forcast-container flex col'>
 
             <div className='search-center-container flex' >
@@ -17,12 +19,8 @@ export default function ForcastDetailsKeletonLoading() {
                     <div className="time flex col align-s">
                         <Skeleton className='weather-icon' animation="wave" variant='circular' width={60} height={60} />
                         <Skeleton animation="wave" width={80} height={10} />
-                        {/* <span className="clock"> */}
-                        <Skeleton animation="wave" width={80} height={60} />
-                        {/* </span> */}
-                        {/* <span className="date"> */}
+                        <Skeleton animation="wave" width={130} height={60} />
                         <Skeleton animation="wave" width={150} height={25} />
-                        {/* </span> */}
                     </div>
                     <div className="location-name flex col align-e">
                         <Skeleton className='weather-icon' animation="wave" variant='circular' width={40} height={40} />
@@ -53,7 +51,6 @@ export default function ForcastDetailsKeletonLoading() {
                         {[0, 1, 2, 3, 4].map(day => {
                             return (
                                 <div className="forcast-preview flex col align-c" key={Math.random(10000)}>
-                                    {/* <Moment date={''} format="ddd" /> */}
                                     <Skeleton className='day' animation="wave" width={45} height={20} />
                                     <Skeleton className='weather-icon' animation="wave" variant='circular' width={60} height={60} />
                                     <Skeleton className='day' animation="wave" width={45} height={20} />
@@ -65,5 +62,6 @@ export default function ForcastDetailsKeletonLoading() {
                 </div>
             </div>
         </div>
+                        </div>
     )
 }

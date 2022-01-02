@@ -4,9 +4,9 @@ import weatherService from '../../services/weatherService.js'
 export function loadWeather(locationKey, cityName, countryName) {
     return async dispatch => {
         try {
-            const fullWeather = await weatherService.getFullWeather(locationKey, cityName, countryName)
+            const {fullWeather,errMsg} = await weatherService.getFullWeather(locationKey, cityName, countryName)
             dispatch({ type: 'LOAD_FULL_WEATHER', fullWeather })
-            return fullWeather
+            return errMsg
         } catch (err) {
             console.log(err)
         }

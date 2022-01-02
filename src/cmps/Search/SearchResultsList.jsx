@@ -6,7 +6,6 @@ export default function SearchResultsList({ results ,onSearch , favoriteLocation
         <div className="results">
             <ul>
                 {results.map(location => <SearchResultsPreview key={location.key + Math.random(1000).toString()} location={location}  onSearch={onSearch} favoriteLocations={favoriteLocations} />)}
-                
             </ul>
         </div>
     )

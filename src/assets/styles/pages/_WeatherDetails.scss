@@ -1,3 +1,167 @@
-.weather-page{
+.forcast-container {
+    // background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    //     url("https://wallpaperaccess.com/full/3364029.jpg");
+    // background-image: url("https://wallpaperaccess.com/full/3364029.jpg");
+    // background: linear - gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    border-radius: 5px;
+    color: white;
+    position: relative;
+    padding-top: 90px;
 
+    .MuiSkeleton-circular {
+        margin-bottom: 10px;
+    }
+    .section-one {
+        height: 500px;
+        padding: 30px 50px;
+
+        .time-and-location {
+            width: 100%;
+
+            .clock {
+                font-size: 2.5rem;
+            }
+            .date {
+                font-size: 1.5rem;
+                .day {
+                    margin-right: 8px;
+                }
+                time {
+                    margin-right: 8px;
+                    &:first-child {
+                        margin-right: 0;
+                    }
+                }
+            }
+
+            .location-name {
+                .city-name {
+                    font-size: 2rem;
+                }
+                .country-name {
+                    font-size: 1rem;
+                }
+            }
+        }
+    }
+    .section-two {
+        height: 280px;
+        padding: 20px 50px;
+        // padding-bottom: 50px;
+        // padding-top: 40px;
+        background: $main-blue;
+        .title {
+            font-size: 1.5rem;
+            display: block;
+            position: relative;
+            top: -70px;
+            // margin-bottom: 40px;
+            // margin-top: -90px;
+        }
+        .week-forcast-container {
+            .today-weather {
+                width: 250px;
+                margin-right: 50px;
+                gap: 6px;
+                .weather-and-btn {
+                    margin-top: -20px;
+                }
+                .day-and-temp {
+                    gap: 5px;
+                }
+                .day {
+                    font-size: 1.3rem;
+                }
+                .temp {
+                    font-size: 2rem;
+                    // margin-top: 10px;
+                }
+            }
+
+            .forcast-list-container {
+                width: 100%;
+                .forcast-preview {
+                    gap: 25px;
+                }
+            }
+        }
+    }
+    .weather-icon {
+        width: 100px;
+        object-fit: contain;
+        height: 70px;
+    }
+}
+
+@media (max-width: $normal-breakpoint) {
+    .forcast-container {
+        .section-one {
+            height: unset;
+            
+        }
+        .section-two {
+            height: unset;
+            .title{
+                margin-top: unset;
+                position: unset;
+                margin-bottom: 50px;
+            }
+            .week-forcast-container{
+                flex-direction: column;
+                .today-weather{
+                    margin-bottom: 20px;
+                    margin-right: 0;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: $narrow-breakpoint) {
+    .forcast-container {
+        .section-one {
+            height: unset;
+            
+        }
+        .section-two {
+            height: unset;
+            padding-right: 0;
+            padding-left: 0;
+            .title{
+                padding: 0 10px;
+                margin-top: unset;
+            }
+            .week-forcast-container{
+                flex-direction: column;
+                .today-weather{
+                    margin-bottom: 50px;
+                    margin-right: 0;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: $mobile-breakpoint) {
+    .forcast-container {
+        border-radius: 0;
+        
+        .section-one{
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+        .section-two{
+            padding-left: 20px;
+            padding-right: 20px;
+            .forcast-list-container {
+                flex-direction: column;
+            }
+            .today-weather{
+                width: unset !important;
+            }
+        }
+    }
 }

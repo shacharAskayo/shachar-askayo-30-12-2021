@@ -9,7 +9,7 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import { useDispatch, useSelector } from 'react-redux';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import { loadEmptyWeather, loadWeather, toggleFavorite } from '../../store/actions/weatherActions';
+import { loadEmptyWeather, loadWeather, toggleFavorite } from '../store/actions/weatherActions';
 
 const columns = [
     { id: 'cityName', label: 'City', minWidth: 170, align: 'center', },
@@ -56,13 +56,6 @@ export default function Favorites({ history }) {
         setPage(0);
     };
 
-    // const onToggleFavorite = () => {
-    //     const { cityName, countryName, locationKey, currWeather } = fullWeather
-    //     const { temperature, imgUrl } = currWeather
-    //     const favoriteObj = { cityName, countryName, locationKey, temperature, imgUrl }
-    //     dispatch(toggleFavorite(favoriteObj))
-    // }
-
     const onSelectFromFavorite = (locationKey, cityName, countryName) => {
         dispatch(loadEmptyWeather())
         history.push('/')
@@ -74,11 +67,11 @@ export default function Favorites({ history }) {
        dispatch(toggleFavorite(row))
     }
 
+if(!favoriteLocations) return null
     return (
         <div className="page">
-
             <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-                <TableContainer sx={{ maxHeight: 440 }}>
+                <TableContainer sx={{ maxHeight: 640 }}>
                     <Table stickyHeader aria-label="sticky table">
                         <TableHead>
                             <TableRow>
@@ -96,11 +89,10 @@ export default function Favorites({ history }) {
                         {favoriteLocations &&
                             <TableBody>
                                 {/* {rows */}
-                                {favoriteLocations
-                                    // .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                {favoriteLocations?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                     .map((row) => {
                                         return (
-                                            <TableRow style={{ cursor: 'pointer' }} onClick={() => onSelectFromFavorite(row.locationKey, row.cityName, row.countryName)} hover role="checkbox" tabIndex={-1} key={row.code}>
+                                            <TableRow style={{ cursor: 'pointer' }} onClick={() => onSelectFromFavorite(row.locationKey, row.cityName, row.countryName)} hover role="checkbox" tabIndex={-1} key={row.cityName}>
                                                 {columns.map((column) => {
                                                     const value = row[column.id];
                                                     return (
@@ -120,15 +112,15 @@ export default function Favorites({ history }) {
                         }
                     </Table>
                 </TableContainer>
-                {/* <TablePagination
+                <TablePagination
                 rowsPerPageOptions={[10, 25, 100]}
                 component="div"
-                count={rows.length}
+                count={favoriteLocations.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onPageChange={handleChangePage}
                 onRowsPerPageChange={handleChangeRowsPerPage}
-            /> */}
+            />
             </Paper>
         </div>
 

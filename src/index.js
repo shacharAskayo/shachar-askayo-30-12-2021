@@ -22,3 +22,17 @@ ReactDOM.render(
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister();
+
+
+
+
+
+/**
+ (()=>{
+   const el = document.querySelectorAll('.container-interview')
+   document.getElementById('openModal').style.visibility='hidden'
+  for(let i=0;i<el.length;i++){
+    el[i].style['filter'] = 'none'
+  }
+})()
+*/

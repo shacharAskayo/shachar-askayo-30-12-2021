@@ -9,13 +9,7 @@ export default function Search({ favoriteLocations, dispatch, currLocation }) {
     const [results, setResults] = useState(null)
     const inputRef = useRef(null)
 
-    useEffect(() => {
-        inputRef.current.value = `${currLocation.cityName}, ${currLocation.countryName} `
-
-    }, [inputRef])
-
-
-
+    useEffect(() => inputRef.current.value = `${currLocation.cityName}, ${currLocation.countryName} `, [inputRef])
 
     const handleChange = async ({ target }) => {
         const { value } = target
@@ -25,9 +19,6 @@ export default function Search({ favoriteLocations, dispatch, currLocation }) {
         }
         else setResults(null)
     }
-
-
-
 
     const onSearch = (Key, LocalizedName, countryName) => {
         dispatch(loadEmptyWeather())

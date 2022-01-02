@@ -4,7 +4,6 @@
 //  helpers
 @import "helpers/Flex";
 
-
 // Dark Mode
 @import "./darkMode.scss";
 
@@ -13,8 +12,8 @@
 
 // Cmps
 @import "cmps/AppHeader";
+@import "cmps/SnackBar";
 @import "cmps/Search";
-@import "cmps/Forcast";
 
 * {
     box-sizing: border-box;
@@ -31,7 +30,7 @@ body {
     justify-content: center;
 }
 
-.App {
+.app {
     padding: 10px;
     // border: 1px solid black;
     width: 1200px;
@@ -62,6 +61,10 @@ body {
             border-radius: 5px;
             background: #d8e1e7;
         }
+        &.search:hover {
+            background: none;
+            border-radius: none;
+        }
     }
 }
 
@@ -82,27 +85,43 @@ button {
     box-shadow: $main-shadow;
     color: white;
     border: 1px solid black;
-    cursor: pointer;   
+    cursor: pointer;
 }
 
-
 @media (max-width: $normal-breakpoint) {
-    .App{
-        width: unset;
+    .app {
+        width: 900px;
         padding: 0;
     }
 }
+@media (max-width: $narrow-breakpoint) {
+    .app {
+        width: 600px;
+    }
+}
 @media (max-width: $mobile-breakpoint) {
-    body{
+    body {
         width: unset;
         height: unset;
         display: unset;
     }
-    .App-container{
+    .app {
+        width: 100%;
+    }
+    .app-container {
         display: unset;
     }
-    .page{
+    .page {
         padding: 0;
-        margin-top: 0;;
+        margin-top: 0;
     }
+    .MuiPaper-root {
+        width: unset !important;
+    }
+}
+
+.MuiTableContainer-root::-webkit-scrollbar {
+    width: 0;
+    // height: 0;
+    // scroll-margin: 50px 0 0 50px;
 }
