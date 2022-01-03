@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, {  useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { toggleDarkMode, toggleUnit } from '../store/actions/weatherActions'
@@ -12,18 +12,19 @@ export default function AppHeader() {
     const currUnit = useSelector(state => state.currUnit)
     const [isMenuOpen, setIsMenuOpen] = useState(false)
 
+
     return (
         <div className='app-header flex justify-c'>
             <MenuIcon className='menu-icon' onClick={() => setIsMenuOpen(!isMenuOpen)} />
             <nav className={`flex justify-sb align-c ${isMenuOpen ? 'open' : ''}`}>
                 <div className="links flex">
-                    <Link to='/'>
+                    <Link to='/' onClick={()=>setIsMenuOpen(false)}>
                         <HomeIcon />
                         <span>
                             Home
                         </span>
                     </Link>
-                    <Link to='/favorite'>
+                    <Link to='/favorite' onClick={()=>setIsMenuOpen(false)}>
                         <FavoriteIcon />
                         <span>
                             Favorite

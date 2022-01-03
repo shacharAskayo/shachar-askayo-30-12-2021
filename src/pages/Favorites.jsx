@@ -65,7 +65,7 @@ export default function Favorites({ history }) {
        dispatch(toggleFavorite(row))
     }
 
-if(!favoriteLocations) return null
+if(!favoriteLocations || favoriteLocations.length === 0) return <div className="page"><span className="alert">No favorites save</span></div>
     return (
         <div className="page">
             <Paper sx={{ width: '100%', overflow: 'hidden' }}>
