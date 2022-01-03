@@ -11,14 +11,13 @@
         margin-bottom: 10px;
     }
     .section-one {
-        // height: 500px;
-        // height: 700px;
-        height: 700px;
+        height: 850px;
         padding: 30px 50px;
-
+        margin-bottom: 20px;
         .time-and-location {
             width: 100%;
 
+            margin-bottom: 20px;
             .clock {
                 font-size: 2.5rem;
             }
@@ -71,7 +70,6 @@
                 }
                 .temp {
                     font-size: 2rem;
-                    // margin-top: 10px;
                 }
             }
 

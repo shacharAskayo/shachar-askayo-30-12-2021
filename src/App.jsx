@@ -30,7 +30,6 @@ function App() {
     bodyEl.className = isDarkMode ? 'dark' : ''
   }, [isDarkMode])
 
-
   const onGeoLocationSucces = async (pos) => {
     const { latitude, longitude } = pos.coords
     const currLocation = await weatherService.getLocationByCords(latitude, longitude)
@@ -42,8 +41,8 @@ function App() {
   }
 
   const handleLoadWeather = async (locationKey, cityName, countryName) => {
-      const errMsg = await dispatch(loadWeather(locationKey, cityName, countryName))
-      errMsg && onOpenModal(errMsg)
+    const errMsg = await dispatch(loadWeather(locationKey, cityName, countryName))
+    errMsg && onOpenModal(errMsg)
   }
 
   const onOpenModal = (errMsg) => {

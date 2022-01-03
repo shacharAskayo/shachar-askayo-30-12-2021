@@ -1,13 +1,70 @@
 
 export default {
+    getFullWeatherStracturedData,
     getImgByWeatherState,
-    makeId
+    makeId,
 }
 
-function getImgByWeatherState( currTime, temp ) {
+function getFullWeatherStracturedData(currWeather, fiveDaysWeather) {
+
+    const currWeatherCopy = JSON.parse(JSON.stringify(currWeather))
+    const fiveDaysWeatherrCopy = JSON.parse(JSON.stringify(fiveDaysWeather))
+    const { WeatherText, Temperature, WeatherIcon, LocalObservationDateTime } = currWeatherCopy
+    const { Headline, DailyForecasts } = fiveDaysWeatherrCopy
+    const localTime = LocalObservationDateTime.substring(0, LocalObservationDateTime.length - 6)
+    const currTime = new Date(localTime)
+    return {
+        createdAt: Date.now(),
+        backgroundImg: getImgByWeatherState(currTime, Temperature.Metric.Value),
+        currWeather: {
+            time: currTime,
+            weatherText: WeatherText,
+            temperature: {
+                c: Temperature.Metric.Value,
+                f: Temperature.Imperial.Value
+            },
+            imgUrl: `https://developer.accuweather.com/sites/default/files/${WeatherIcon < 10 ? '0' : ''}${WeatherIcon}-s.png`
+        },
+        fiveDaysWeather: {
+            headline: {
+                txt: Headline.Text,
+                severity: Headline.Severity
+            },
+            forcast: DailyForecasts.map(currDay => {
+
+                const { Temperature, Day, Night } = currDay
+                return {
+                    time: new Date(currDay.Date),
+                    dayTime: {
+                        temperature: {
+                            c: ((Temperature.Maximum.Value - 32) * 5 / 9).toFixed(),
+                            f: Temperature.Maximum.Value,
+                        },
+                        imgUrl: `https://developer.accuweather.com/sites/default/files/${Day.Icon < 10 ? '0' : ''}${Day.Icon}-s.png`,
+                        IconPhrase: Day.IconPhrase
+                    },
+                    nightTime: {
+                        temperature: {
+                            c: ((Temperature.Minimum.Value - 32) * 5 / 9).toFixed(),
+                            f: Temperature.Minimum.Value,
+                        },
+                        imgUrl: `https://developer.accuweather.com/sites/default/files/${Night.Icon < 10 ? '0' : ''}${Night.Icon}-s.png`,
+                        IconPhrase: Day.IconPhrase
+                    },
+
+                }
+            })
+        }
+    }
+
+}
+
+function getImgByWeatherState(currTime, temp) {
+
     const hours = currTime.getHours()
     if (hours > 5 && hours < 17) return _getDayImg(temp)
     else return _getNightImg(temp)
+
 }
 
 function _getDayImg(temp) {
@@ -28,74 +85,3 @@ function makeId(length = 5) {
     }
     return text
 }
-
-// (() => {
-//     const fullWeatherObj = {
-//         refreshtime: 1640927070271 + (1000 * 60 * 60 * 3),
-//         locationKey: 213123,
-//         cityName: 'Tel aviv',
-//         countryName: 'israel',
-//         // backgroundImg: utilsService.getImgByWeatherState({ currTime,temp:Temperature.Metric.Value}),
-//         backgroundImg: `https://wallpaperaccess.com/full/3364029.jpg`,
-//         currWeather: {
-//             time: 'Fri Dec 31 2021 12:03:56 GMT+0700 (Indochina Time)',
-//             weatherText: 'cloudy asf',
-//             temperature: {
-//                 c: 20,
-//                 f: 68
-//             },
-//             imgUrl: `https://developer.accuweather.com/sites/default/files/${5 < 10 ? '0' : ''}${5}-s.png`
-//         },
-//         fiveDaysWeather: {
-//             headline: {
-//                 txt: 'terribly sunny this bloody week',
-//                 severity: 4
-//             },
-//             forcast: [1, 2, 3, 4, 5].map(currDay => {
-//                 // const { Temperature, Day, Night } = currDay
-//                 return {
-//                     time: new Date(),
-//                     dayTime: {
-//                         temperature: {
-//                             c: 20,
-//                             f: 68,
-//                         },
-//                         imgUrl: `https://developer.accuweather.com/sites/default/files/${6 < 10 ? '0' : ''}${6}-s.png`,
-//                         // IconPhrase: Day.IconPhrase
-//                     },
-//                     nightTime: {
-//                         temperature: {
-//                             c: 10,
-//                             f: 34,
-//                         },
-//                         imgUrl: `https://developer.accuweather.com/sites/default/files/${24 < 10 ? '0' : ''}${24}-s.png`,
-//                         // IconPhrase: Day.IconPhrase
-//                     },
-
-//                 }
-//             })
-//         }
-//     }
-//     localStorage.setItem('fullWeather', JSON.stringify(fullWeatherObj))
-// })()
-
-// (() => {
-//     var storedFavoriteLocations = JSON.parse(localStorage.getItem('favoriteLocations')) || []
-//     const favoriteObj = { cityName :'Jerusalem', countryName:'Israel', locationKey:213222, temperature:{c:25,f:72}, imgUrl:`https://developer.accuweather.com/sites/default/files/${24 < 10 ? '0' : ''}06-s.png` }
-
-//     if (storedFavoriteLocations && storedFavoriteLocations.length > 0) {
-//         if (storedFavoriteLocations.every(location => location.cityName !== favoriteObj.cityName)) {
-//             storedFavoriteLocations.push(favoriteObj)
-//         }
-//         else {
-//             const idx = storedFavoriteLocations.findIndex(location => location.cityName === favoriteObj.cityName)
-//             storedFavoriteLocations.splice(idx, 1)
-//         }
-//     }else{
-//         storedFavoriteLocations.push(favoriteObj)
-//     }
-
-
-//     localStorage.setItem('favoriteLocations', JSON.stringify(storedFavoriteLocations))
-
-// })()

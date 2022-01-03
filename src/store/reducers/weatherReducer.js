@@ -3,7 +3,7 @@ const initialState = {
     fullWeather: null,
     favoriteLocations: null,
     currUnit: 'c',
-    isDarkMode: false
+    isDarkMode: window.matchMedia('(prefers-color-scheme: dark)')?.matches || false
 }
 
 export function weatherReducer(state = initialState, action) {

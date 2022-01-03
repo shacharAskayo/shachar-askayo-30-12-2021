@@ -4,7 +4,7 @@ import weatherService from '../../services/weatherService.js'
 export function loadWeather(locationKey, cityName, countryName) {
     return async dispatch => {
         try {
-            const { fullWeather, errMsg } = await weatherService.getFullWeather(locationKey, cityName, countryName)
+            const { fullWeather, errMsg } = await weatherService.loadFullWeather(locationKey, cityName, countryName)
             dispatch({ type: 'LOAD_FULL_WEATHER', fullWeather })
             return errMsg
         } catch (err) {
@@ -55,6 +55,17 @@ export function addAttachmentPost(fullWeatherObj,post) {
             dispatch({ type: 'UPDATE_FULL_WEATHER', updatedFullWeather })
         } catch (err) {
             console.log('Error in weatherAction in addAttachmentPost function', err)
+        }
+    }
+}
+
+export function deleteAttachmentPost(fullWeatherObj,post) {
+    return async dispatch => {
+        try {
+            const updatedFullWeather = attachmentService.deleteAttachmentPost(fullWeatherObj,post)
+            dispatch({ type: 'UPDATE_FULL_WEATHER', updatedFullWeather })
+        } catch (err) {
+            console.log('Error in weatherAction in deleteAttachmentPost function', err)
         }
     }
 }

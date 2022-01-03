@@ -13,7 +13,8 @@
     nav {
         padding: 50px;
         margin-bottom: 75px;
-        width: 1200px;
+        width: 1400px;
+
         .links {
             gap: 15px;
         }
@@ -43,7 +44,6 @@
 
 @media (max-width: $normal-breakpoint) {
     .app-header {
-        // position: unset;
         nav {
             width: 900px;
         }
@@ -51,7 +51,6 @@
 }
 @media (max-width: $narrow-breakpoint) {
     .app-header {
-        // position: unset;
         nav {
             width: 600px;
         }
@@ -60,10 +59,11 @@
 @media (max-width: $mobile-breakpoint) {
     .app-header {
         position: unset;
-        height: 80px;
+        height: 60px;
         align-items: center;
         justify-content: flex-start;
         padding-left: 10px;
+        
         .menu-icon {
             display: block;
         }
@@ -91,7 +91,7 @@
                 flex-direction: column;
             }
             &.open {
-                top: 80px;
+                top: 50px;
             }
         }
     }

@@ -35,6 +35,9 @@ body {
             }
             .post-preview{
             color: $main-col-dark;
+            img{
+                filter:brightness(0.5);
+            }
 
             }
         }
@@ -44,7 +47,6 @@ body {
         .MuiTableCell-root{
             background-color: $main-bg-dark;
             border-bottom: 1px solid $sec-bg-dark;
-            // border-bottom: 1px solid $main-col-dark;
             color: $main-col-dark;
         }
         .MuiToolbar-root{

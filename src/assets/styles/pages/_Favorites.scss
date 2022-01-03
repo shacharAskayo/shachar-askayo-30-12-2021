@@ -4,3 +4,15 @@
 .MuiButtonBase-root{
     margin: 5px !important;
 }
+.MuiTableCell-head{
+    font-weight: 600 !important;
+    font-size: 1rem !important;
+}
+
+
+@media (max-width: $mobile-breakpoint) {
+    .MuiTableContainer-root {
+
+        max-height: calc(100vh - 125px) !important;    
+    }
+}

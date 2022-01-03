@@ -2,7 +2,8 @@ import React, { useEffect, useRef, useState } from 'react'
 import weatherService from '../../services/weatherService';
 import { loadEmptyWeather, loadWeather } from '../../store/actions/weatherActions';
 import SearchResultsList from './SearchResultsList';
-var _ = require('lodash');
+import _ from 'lodash';
+
 
 var englishAlphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 export default function Search({ favoriteLocations, dispatch, currLocation }) {
@@ -16,7 +17,6 @@ export default function Search({ favoriteLocations, dispatch, currLocation }) {
         const { value } = target
         if (value.length > 0 && value.split('').every(val => englishAlphabet.includes(val.toLowerCase()))) {
             const autoCompleteResults = await weatherService.getAutoCompleteResults(value)
-            console.log('autoCompleteResults',autoCompleteResults);
             setResults(autoCompleteResults)
         }
         else setResults(null)

@@ -1,52 +1,91 @@
 .attachments-container {
     width: 100%;
     display: flex;
-    padding: 10px;
     gap: 10px;
-    margin: 20px 0;
-    height: 380px;
+    margin-top: 40px;
+    margin-bottom: 60px;
+    height: 495px;
     padding-bottom: 0;
+
+    background: #ffffff00;
+    padding: 10px;
+    border-radius: 8px;
+    .container-title {
+        margin-bottom: 10px;
+        font-size: 1.5rem;
+    }
+
     .inputs-container {
-        form{
-            
+        background: $main-blue;
+        width: fit-content;
+        padding: 10px 20px;
+        border-radius: 8px;
+        gap: 20px;
+        backdrop-filter: blur(10px);
+
+        span {
+            width: 110px;
+        }
+        form {
             display: flex;
             flex-direction: column;
             align-items: start;
             gap: 15px;
-            input:first-of-type{
-                border: 1px solid $main-col-dark;
+            input:first-of-type {
                 padding: 5px 10px;
                 outline: none;
+                border: none;
                 border-radius: 10px;
+                margin-right: 10px;
             }
-            .add-img-container{
-             gap: 10px;   
-             cursor: pointer;
+            .add-img-container {
+                gap: 5px;
+                cursor: pointer;
             }
         }
-
+        .MuiSkeleton-root {
+            background: rgb(255 255 255 / 11%);
+        }
+        img {
+            object-fit: cover;
+            width: 100px;
+            height: 100px;
+        }
     }
     .posts-container {
         width: 100%;
         overflow-x: auto;
         padding: 10px;
         padding-bottom: 0;
-        // overflow-y: hidden;
         height: 100%;
         .post-preview {
-            margin-right: 100px;
+            margin-right: 80px;
             background: $main-blue;
             color: white;
             font-size: 1.2rem;
-            padding-top: 10px;
             border-radius: 8px;
             width: 400px;
             height: 100%;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            backdrop-filter: blur(10px);
 
             flex: none;
+            position: relative;
+            transition: all 0.3s;
+            &:hover {
+                svg {
+                    visibility: visible;
+                }
+            }
+            svg {
+                visibility: hidden;
+                position: absolute;
+                right: 10px;
+                top: 10px;
+                cursor: pointer;
+            }
             span {
                 padding: 10px;
                 margin-bottom: 10px;
@@ -56,14 +95,34 @@
                 border-bottom-left-radius: 8px;
                 border-bottom-right-radius: 8px;
                 width: 100%;
-                height: 70%;
+                height: 210px;
                 object-fit: cover;
+            }
+            .skeleton-img {
+                transform: none;
+                margin-bottom: 0;
             }
         }
         &::-webkit-scrollbar {
             width: 0;
             height: 0;
-            // scroll-margin: 50px 0 0 50px;
+        }
+    }
+}
+
+@media (max-width: $mobile-breakpoint) {
+    .attachments-container {
+        height: 500px;
+        margin: 50px 0;
+
+        .inputs-container {
+            width: 100%;
+            flex-direction: column;
+        }
+        .post-preview {
+            svg {
+                visibility: visible !important;
+            }
         }
     }
 }

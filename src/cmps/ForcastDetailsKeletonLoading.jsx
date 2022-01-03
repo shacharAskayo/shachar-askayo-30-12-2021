@@ -27,6 +27,40 @@ export default function ForcastDetailsKeletonLoading() {
                         </div>
 
                     </div>
+                    <div className='attachments-container flex col'>
+
+                        <div className="inputs-container flex">
+                            <form >
+                                <div className="input-and-counter flex ">
+                                    <Skeleton animation="wave" width={170} height={25} style={{marginRight:5}} />
+                                    <Skeleton animation="wave" width={130} height={25} />
+                                </div>
+                                <label htmlFor="file-input">
+                                    <div className="add-img-container flex alig-c">
+                                        <Skeleton animation="wave" width={100} height={35} />
+                                    </div>
+                                </label>
+                                        <Skeleton animation="wave" width={80} height={40} />
+                            </form>
+                        </div>
+
+
+                        <div className="posts-container flex justify-sb">
+
+                            {[0,1,2,3].map(post => {
+                                return (
+                                    <div className='post-preview' key={post}>
+                                        <span>
+
+                                        <Skeleton animation="wave" width={140} height={25} />
+                                        </span>
+                                        <Skeleton className='skeleton-img' animation="wave" width={'100%'} height={210} />
+
+                                    </div>
+                                )
+                            })}
+                        </div>
+                    </div>
                 </div>
                 <div className="section-two">
                     <Skeleton className='title title-skeleton' animation="wave" width={500} height={25} />

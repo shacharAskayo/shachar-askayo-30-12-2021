@@ -11,12 +11,12 @@ import { toggleFavorite } from '../store/actions/weatherActions';
 
 import Search from '../cmps/Search/Search'
 import ForcastDetailsKeletonLoading from '../cmps/ForcastDetailsKeletonLoading';
+import AttachmentPosts from '../cmps/AttachmentPosts';
 
 import dayClearBg from '../assets/imgs/day-clear.jpg'
 import dayCloudyBg from '../assets/imgs/day-cloudy.jpg'
 import nightCloudyBg from '../assets/imgs/night-cloudy.jpg'
 import nightClearBg from '../assets/imgs/night-clear.jpg'
-import AttachmentPosts from '../cmps/AttachmentPosts';
 
 
 export default function WeatherDetails() {
