@@ -35,11 +35,10 @@ export function loadFavoirteLocations() {
     }
 }
 
-export function toggleFavorite(fullWeatherObj) {
-    const fullWeatherObjCopy = JSON.parse(JSON.stringify(fullWeatherObj))
+export function toggleFavorite(favoriteObj) {
     return async dispatch => {
         try {
-            const favoriteLocations = weatherService.toggleFavorite(fullWeatherObjCopy)
+            const favoriteLocations = weatherService.toggleFavorite(favoriteObj)
             dispatch({ type: 'UPDATE_FAVORITE_LOCATIONS', favoriteLocations })
             return favoriteLocations
         } catch (err) {

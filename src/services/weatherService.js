@@ -3,7 +3,7 @@ import attachmentService from './attachmentService'
 import storageService from './storageService'
 import utilsService from './utilsService'
 
-var axios = Axios.create({
+const axios = Axios.create({
     withCredentials: false
 })
 
@@ -36,10 +36,6 @@ async function getLocationByCords(lat, lon) {
 
 async function loadFullWeather(locationKey, cityName, countryName) {
 
-    var storedFullWeather = JSON.parse(localStorage.getItem('fullWeather'))
-    storedFullWeather.attachment = attachmentService.loadAttachment(storedFullWeather.cityName, storedFullWeather.countryName)
-    return { fullWeather: storedFullWeather, errMsg: 'locall' }
-
     const currWeather = await _getCurrWeather(locationKey)
     const fiveDaysWeather = await _getFiveDayWeather(locationKey)
     if (currWeather && fiveDaysWeather) {
@@ -55,7 +51,7 @@ async function loadFullWeather(locationKey, cityName, countryName) {
         return { fullWeather: fullWeatherObj, errMsg: null }
     }
     else {
-        var storedFullWeather = storageService.query('fullWeather')
+        const storedFullWeather = storageService.query('fullWeather')
         if (storedFullWeather) return { fullWeather: storedFullWeather, errMsg: `Couldn't load updated weather, showing last weather saved ` }
         else return { fullWeather: null, errMsg: `Couldn't load updated or saved weather ` }
     }
@@ -63,7 +59,7 @@ async function loadFullWeather(locationKey, cityName, countryName) {
 
 function loadFavoirteLocations() {
 
-    var storedFavoriteLocations = storageService.query('favoriteLocations')
+    const storedFavoriteLocations = storageService.query('favoriteLocations')
     if (storedFavoriteLocations && storedFavoriteLocations?.length > 0) return storedFavoriteLocations
     else return []
 
@@ -84,7 +80,7 @@ async function getAutoCompleteResults(txt) {
                 } else {
                     storageService.save('locations', autoCompleteResults.data)
                 }
-                return JSON.parse(JSON.stringify(autoCompleteResults.data))
+                return [...autoCompleteResults.data]
             }
         } catch (err) { console.log('Error in getAutoCompleteResults in weatherService ., Error:', err); }
     }
@@ -93,13 +89,13 @@ async function getAutoCompleteResults(txt) {
 
 function toggleFavorite(favoriteObj) {
 
+    const favoriteObjCopy = {...favoriteObj}
     const storedFavoriteLocations = loadFavoirteLocations()
-
-    if (storedFavoriteLocations.every(location => location.locationKey !== favoriteObj.locationKey)) {
-        storedFavoriteLocations.push(favoriteObj)
+    if (storedFavoriteLocations.every(location => location.locationKey !== favoriteObjCopy.locationKey)) {
+        storedFavoriteLocations.push(favoriteObjCopy)
     }
     else {
-        const idx = storedFavoriteLocations.findIndex(location => location.locationKey === favoriteObj.locationKey)
+        const idx = storedFavoriteLocations.findIndex(location => location.locationKey === favoriteObjCopy.locationKey)
         storedFavoriteLocations.splice(idx, 1)
     }
     storageService.save('favoriteLocations', storedFavoriteLocations)

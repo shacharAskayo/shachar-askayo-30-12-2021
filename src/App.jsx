@@ -18,24 +18,20 @@ function App() {
 
   const modalTimeOutRef = useRef(null)
 
-  useEffect(() => document.body.className = isDarkMode ? 'dark' : '', [isDarkMode])
-
   useEffect(async () => {
     navigator.geolocation.getCurrentPosition(onGeoLocationSucces, () => handleLoadWeather('215854', 'Tel Aviv', 'Israel'))
     dispatch(loadFavoirteLocations())
     return () => { modalTimeOutRef.current && clearTimeout(modalTimeOutRef.current) }
   }, [])
 
-
   const onGeoLocationSucces = async (pos) => {
     const { latitude, longitude } = pos.coords
-    // const currLocation = await weatherService.getLocationByCords(latitude, longitude)
-    const currLocation = null
+    const currLocation = await weatherService.getLocationByCords(latitude, longitude)
     if (currLocation) {
       const { locationKey, cityName, countryName } = currLocation
       handleLoadWeather(locationKey, cityName, countryName)
     }
-    else { handleLoadWeather('215854', 'Tel Aviv', 'Israel') }
+    else { setTimeout(() => handleLoadWeather('215854', 'Tel Aviv', 'Israel'), 3000) }
   }
 
   const handleLoadWeather = async (locationKey, cityName, countryName) => {
@@ -48,9 +44,8 @@ function App() {
     modalTimeOutRef.current = setTimeout(() => { setSnackBarContent(null) }, 5000)
   }
 
-  console.log(<WeatherDetails/>)
   return (
-    <div className='app-container flex justify-c '>
+    <div className={`app-container ${isDarkMode ? 'dark' : ''} flex justify-c`} >
       <div className='app'>
         <Router>
           <AppHeader />

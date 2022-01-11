@@ -29,18 +29,7 @@ export default React.memo(function Search({ favoriteLocations, dispatch, currLoc
         dispatch(loadWeather(Key, LocalizedName, countryName))
     }
 
-
-    const debounce = (func, delay) => {
-
-        var timeout;
-        return function (ev) {
-            clearTimeout(timeout)
-            timeout = setTimeout(() => func(ev), delay);
-        }
-    }
-
-    // const delayedHandleChange = _.debounce(handleChange, 500);
-    const delayedHandleChange = debounce(handleChange, 500)
+    const delayedHandleChange = _.debounce(handleChange, 500);
 
     return (
         <div className='search-center-container flex'>
