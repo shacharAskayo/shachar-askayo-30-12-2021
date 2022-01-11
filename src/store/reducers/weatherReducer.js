@@ -16,7 +16,7 @@ export function weatherReducer(state = initialState, action) {
             return { ...state, fullWeather: null }
         case 'LOAD_FAVORITE_LOCATIONS':
             return { ...state, favoriteLocations: action.favoriteLocations }
-        case 'TOGGLE_FAVORITE_LOCATIONS':
+        case 'UPDATE_FAVORITE_LOCATIONS':
             return { ...state, favoriteLocations: action.favoriteLocations }
         case 'TOGGLE_UNIT':
             return { ...state, currUnit: state.currUnit === 'c' ? 'f' : 'c' }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { HashRouter as Router, Switch, Route } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { loadFavoirteLocations, loadWeather, reset } from './store/actions/weatherActions';
@@ -13,26 +13,24 @@ function App() {
 
   const isDarkMode = useSelector(state => state.isDarkMode)
   const [snackBarContent, setSnackBarContent] = useState(null)
-  const [modalTimeOut, setModalTimeOut] = useState(null)
 
   const dispatch = useDispatch()
+
+  const modalTimeOutRef = useRef(null)
+
+  useEffect(() => document.body.className = isDarkMode ? 'dark' : '', [isDarkMode])
 
   useEffect(async () => {
     navigator.geolocation.getCurrentPosition(onGeoLocationSucces, () => handleLoadWeather('215854', 'Tel Aviv', 'Israel'))
     dispatch(loadFavoirteLocations())
-    return () => {
-      modalTimeOut && clearTimeout(modalTimeOut)
-    }
+    return () => { modalTimeOutRef.current && clearTimeout(modalTimeOutRef.current) }
   }, [])
 
-  useEffect(() => {
-    const bodyEl = document.querySelector('body')
-    bodyEl.className = isDarkMode ? 'dark' : ''
-  }, [isDarkMode])
 
   const onGeoLocationSucces = async (pos) => {
     const { latitude, longitude } = pos.coords
-    const currLocation = await weatherService.getLocationByCords(latitude, longitude)
+    // const currLocation = await weatherService.getLocationByCords(latitude, longitude)
+    const currLocation = null
     if (currLocation) {
       const { locationKey, cityName, countryName } = currLocation
       handleLoadWeather(locationKey, cityName, countryName)
@@ -47,23 +45,21 @@ function App() {
 
   const onOpenModal = (errMsg) => {
     setSnackBarContent(errMsg)
-    setModalTimeOut(
-      setTimeout(() => setSnackBarContent(null), 5000)
-    )
+    modalTimeOutRef.current = setTimeout(() => { setSnackBarContent(null) }, 5000)
   }
 
+  console.log(<WeatherDetails/>)
   return (
     <div className='app-container flex justify-c '>
       <div className='app'>
         <Router>
           <AppHeader />
           <Switch>
-            <Route exact path='/favorite' component={Favorites} />
-            <Route exact path='/' component={WeatherDetails} />
+            <Route path='/favorite' component={Favorites} />
+            <Route path='/' component={WeatherDetails} />
           </Switch>
         </Router>
         <SnackBar snackBarContent={snackBarContent} />
-
       </div>
     </div>
   );

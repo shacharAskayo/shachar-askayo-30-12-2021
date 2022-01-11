@@ -1,21 +1,22 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import weatherService from '../../services/weatherService';
 import { loadEmptyWeather, loadWeather } from '../../store/actions/weatherActions';
 import SearchResultsList from './SearchResultsList';
 import _ from 'lodash';
 
 
-var englishAlphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
-export default function Search({ favoriteLocations, dispatch, currLocation }) {
+
+export default React.memo(function Search({ favoriteLocations, dispatch, currLocation }) {
 
     const [results, setResults] = useState(null)
     const inputRef = useRef(null)
 
     useEffect(() => inputRef.current.value = `${currLocation.cityName}, ${currLocation.countryName} `, [inputRef])
 
+
     const handleChange = async ({ target }) => {
         const { value } = target
-        if (value.length > 0 && value.split('').every(val => englishAlphabet.includes(val.toLowerCase()))) {
+        if (value.length > 0 && value.split('').every(val => val.charCodeAt() >= 65 && val.charCodeAt() <= 122)) {
             const autoCompleteResults = await weatherService.getAutoCompleteResults(value)
             setResults(autoCompleteResults)
         }
@@ -28,7 +29,18 @@ export default function Search({ favoriteLocations, dispatch, currLocation }) {
         dispatch(loadWeather(Key, LocalizedName, countryName))
     }
 
-    const delayedHandleChange = _.debounce(handleChange, 500);
+
+    const debounce = (func, delay) => {
+
+        var timeout;
+        return function (ev) {
+            clearTimeout(timeout)
+            timeout = setTimeout(() => func(ev), delay);
+        }
+    }
+
+    // const delayedHandleChange = _.debounce(handleChange, 500);
+    const delayedHandleChange = debounce(handleChange, 500)
 
     return (
         <div className='search-center-container flex'>
@@ -38,4 +50,4 @@ export default function Search({ favoriteLocations, dispatch, currLocation }) {
             </div>
         </div>
     )
-}
+})

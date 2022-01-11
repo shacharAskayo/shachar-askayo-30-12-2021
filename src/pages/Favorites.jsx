@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -38,8 +38,9 @@ const columns = [
 ];
 
 export default function Favorites({ history }) {
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
 
     const favoriteLocations = useSelector(state => state.favoriteLocations)
     const currUnit = useSelector(state => state.currUnit)
@@ -60,12 +61,12 @@ export default function Favorites({ history }) {
         dispatch(loadWeather(locationKey, cityName, countryName))
     }
 
-    const onToggleFavorite=(ev,row)=>{
+    const onToggleFavorite = (ev, row) => {
         ev.stopPropagation()
-       dispatch(toggleFavorite(row))
+        dispatch(toggleFavorite(row))
     }
 
-if(!favoriteLocations || favoriteLocations.length === 0) return <div className="page"><span className="alert">No favorites saved</span></div>
+    if (!favoriteLocations || favoriteLocations.length === 0) return <div className="page"><span className="alert">No favorites saved</span></div>
     return (
         <div className="page">
             <Paper sx={{ width: '100%', overflow: 'hidden' }}>
@@ -99,7 +100,7 @@ if(!favoriteLocations || favoriteLocations.length === 0) return <div className="
                                                             {column.id === 'countryName' && <span>{row.countryName}</span>}
                                                             {column.id === 'temperature' && <span>{row.temperature[currUnit]}°</span>}
                                                             {column.id === 'imgUrl' && <img src={row.imgUrl} />}
-                                                            {column.id === 'favorite' && <FavoriteIcon className='favorite-icon' onClick={(ev)=>onToggleFavorite(ev,row)} />}
+                                                            {column.id === 'favorite' && <FavoriteIcon className='favorite-icon' onClick={(ev) => onToggleFavorite(ev, row)} />}
                                                         </TableCell>
                                                     );
                                                 })}
@@ -111,14 +112,14 @@ if(!favoriteLocations || favoriteLocations.length === 0) return <div className="
                     </Table>
                 </TableContainer>
                 <TablePagination
-                rowsPerPageOptions={[10, 25, 100]}
-                component="div"
-                count={favoriteLocations.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-            />
+                    rowsPerPageOptions={[10, 25, 100]}
+                    component="div"
+                    count={favoriteLocations.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                />
             </Paper>
         </div>
 

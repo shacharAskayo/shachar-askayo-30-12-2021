@@ -9,9 +9,9 @@ export default function SearchResultsPreview({ location, onSearch, favoriteLocat
     return (
         <li onClick={()=>onSearch(Key, LocalizedName, Country.LocalizedName)}>
             <span>{LocalizedName} , {Country.LocalizedName}</span>
-            {favoriteLocations?.some(location => location.cityName === LocalizedName && location.countryName === Country.LocalizedName) ?
-                <FavoriteIcon className='favorite-icon search' /> :
-                <FavoriteBorderIcon className='favorite-icon search' />
+            {favoriteLocations?.every(location => location.locationKey !== Key) ?
+                <FavoriteBorderIcon className='favorite-icon search' /> :
+                <FavoriteIcon className='favorite-icon search' /> 
             }
         </li>
     )

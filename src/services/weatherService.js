@@ -1,5 +1,6 @@
 import Axios from 'axios'
 import attachmentService from './attachmentService'
+import storageService from './storageService'
 import utilsService from './utilsService'
 
 var axios = Axios.create({
@@ -35,23 +36,26 @@ async function getLocationByCords(lat, lon) {
 
 async function loadFullWeather(locationKey, cityName, countryName) {
 
+    var storedFullWeather = JSON.parse(localStorage.getItem('fullWeather'))
+    storedFullWeather.attachment = attachmentService.loadAttachment(storedFullWeather.cityName, storedFullWeather.countryName)
+    return { fullWeather: storedFullWeather, errMsg: 'locall' }
+
     const currWeather = await _getCurrWeather(locationKey)
     const fiveDaysWeather = await _getFiveDayWeather(locationKey)
-
     if (currWeather && fiveDaysWeather) {
         const fullWeatherObj = {
             createdAt: Date.now(),
             locationKey,
             cityName,
             countryName,
-            attachment: attachmentService.loadAttachment(cityName, countryName),
+            attachment: attachmentService.loadAttachment(locationKey),
             ...utilsService.getFullWeatherStracturedData(currWeather, fiveDaysWeather)
         }
-        localStorage.setItem('fullWeather', JSON.stringify(fullWeatherObj))
+        storageService.save('fullWeather', fullWeatherObj)
         return { fullWeather: fullWeatherObj, errMsg: null }
     }
     else {
-        var storedFullWeather = JSON.parse(localStorage.getItem('fullWeather'))
+        var storedFullWeather = storageService.query('fullWeather')
         if (storedFullWeather) return { fullWeather: storedFullWeather, errMsg: `Couldn't load updated weather, showing last weather saved ` }
         else return { fullWeather: null, errMsg: `Couldn't load updated or saved weather ` }
     }
@@ -59,7 +63,7 @@ async function loadFullWeather(locationKey, cityName, countryName) {
 
 function loadFavoirteLocations() {
 
-    var storedFavoriteLocations = JSON.parse(localStorage.getItem('favoriteLocations'))
+    var storedFavoriteLocations = storageService.query('favoriteLocations')
     if (storedFavoriteLocations && storedFavoriteLocations?.length > 0) return storedFavoriteLocations
     else return []
 
@@ -67,7 +71,7 @@ function loadFavoirteLocations() {
 
 async function getAutoCompleteResults(txt) {
 
-    const storgedAutoComplete = JSON.parse(localStorage.getItem('locations')) || []
+    const storgedAutoComplete = storageService.query('locations')
     const storgedMatches = storgedAutoComplete?.filter(location => location.LocalizedName.toLowerCase().startsWith(txt.toLowerCase()))
     if (storgedMatches && storgedMatches.length > 0) return storgedMatches
     else {
@@ -75,10 +79,10 @@ async function getAutoCompleteResults(txt) {
             const autoCompleteResults = await axios.get(`https://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${API_KEY}&q=${txt}`)
             if (autoCompleteResults.data?.length > 0) {
                 if (storgedAutoComplete.length > 0) {
-                    autoCompleteResults.data.map(location => storgedAutoComplete.every(loc => loc.LocalizedName !== location.LocalizedName) ? storgedAutoComplete.push(location) : null)
-                    localStorage.setItem('locations', JSON.stringify(storgedAutoComplete))
+                    autoCompleteResults.data.map(autoCompleteLoc => storgedAutoComplete.every(storgedAutoCompleteLoc => storgedAutoCompleteLoc.Key !== autoCompleteLoc.Key) ? storgedAutoComplete.push(autoCompleteLoc) : null)
+                    storageService.save('locations', storgedAutoComplete)
                 } else {
-                    localStorage.setItem('locations', JSON.stringify(autoCompleteResults.data))
+                    storageService.save('locations', autoCompleteResults.data)
                 }
                 return JSON.parse(JSON.stringify(autoCompleteResults.data))
             }
@@ -90,14 +94,15 @@ async function getAutoCompleteResults(txt) {
 function toggleFavorite(favoriteObj) {
 
     const storedFavoriteLocations = loadFavoirteLocations()
-    if (storedFavoriteLocations.some(location => location.cityName === favoriteObj.cityName && location.countryName === favoriteObj.countryName)) {
-        const idx = storedFavoriteLocations.findIndex(location => location.cityName === favoriteObj.cityName && location.countryName === favoriteObj.countryName)
-        storedFavoriteLocations.splice(idx, 1)
-    }
-    else {
+
+    if (storedFavoriteLocations.every(location => location.locationKey !== favoriteObj.locationKey)) {
         storedFavoriteLocations.push(favoriteObj)
     }
-    localStorage.setItem('favoriteLocations', JSON.stringify(storedFavoriteLocations))
+    else {
+        const idx = storedFavoriteLocations.findIndex(location => location.locationKey === favoriteObj.locationKey)
+        storedFavoriteLocations.splice(idx, 1)
+    }
+    storageService.save('favoriteLocations', storedFavoriteLocations)
     return storedFavoriteLocations
 
 }

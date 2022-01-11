@@ -1,3 +1,4 @@
+import storageService from "./storageService"
 import utilsService from "./utilsService"
 
 export default {
@@ -6,14 +7,14 @@ export default {
     deleteAttachmentPost
 }
 
-function loadAttachment(cityName, countryName) {
+function loadAttachment(locationKey) {
+    var storgedAttachments = storageService.query('attachments')
 
-    var storgedAttachments = JSON.parse(localStorage.getItem('attachments'))
     if (storgedAttachments && storgedAttachments.length > 0) {
-        const currAttachment = storgedAttachments.find(attachment => attachment.cityName === cityName && attachment.countryName === countryName)
+        const currAttachment = storgedAttachments.find(attachment => attachment.locationKey === locationKey)
         if (currAttachment) return currAttachment
-        else return { id: utilsService.makeId(), cityName, countryName, posts: [] }
-    } else { return { id: utilsService.makeId(), cityName, countryName, posts: [] } }
+        else return { id: utilsService.makeId(), locationKey, posts: [] }
+    } else { return { id: utilsService.makeId(), locationKey, posts: [] } }
 
 }
 
@@ -21,20 +22,22 @@ function addAttachmentPost(fullWeather, newPost) {
 
     const fullWeatherCopy = JSON.parse(JSON.stringify(fullWeather))
     fullWeatherCopy.attachment.posts.unshift({ ...newPost })
-    var storgedAttachments = JSON.parse(localStorage.getItem('attachments'))
+
+    var storgedAttachments = storageService.query('attachments')
+
+
     if (storgedAttachments && storgedAttachments.length > 0) {
         const currAttachment = storgedAttachments.find(attachment => attachment.id === fullWeather.attachment.id)
         if (currAttachment) {
-            currAttachment.posts.unshift({ ...newPost })
-            const updatedAttachments = storgedAttachments.map(attachment => attachment.id === currAttachment.id ? currAttachment : attachment)
-            localStorage.setItem('attachments', JSON.stringify(updatedAttachments))
+            const updatedAttachments = storgedAttachments.map(attachment => attachment.id === currAttachment.id ? fullWeatherCopy.attachment : attachment)
+            storageService.save('attachments', updatedAttachments)
         }
         else {
             storgedAttachments.unshift(fullWeatherCopy.attachment)
-            localStorage.setItem('attachments', JSON.stringify(storgedAttachments))
+            storageService.save('attachments', storgedAttachments)
         }
     }
-    else { localStorage.setItem('attachments', JSON.stringify([fullWeatherCopy.attachment])) }
+    else { storageService.save('attachments', [fullWeatherCopy.attachment]) }
     return fullWeatherCopy
 
 }
@@ -45,9 +48,9 @@ function deleteAttachmentPost(fullWeather, currPost) {
     const { attachment } = fullWeatherCopy
     const idx = attachment.posts.findIndex(post => post.id === currPost.id)
     attachment.posts.splice(idx, 1)
-    var storgedAttachments = JSON.parse(localStorage.getItem('attachments'))
+    var storgedAttachments = storageService.query('attachments')
     const updatedAttachments = storgedAttachments.map(attach => attach.id === attachment.id ? attachment : attach)
-    localStorage.setItem('attachments', JSON.stringify(updatedAttachments))
+    storageService.save('attachments',updatedAttachments)
     fullWeatherCopy.attachment = attachment
     return fullWeatherCopy
 

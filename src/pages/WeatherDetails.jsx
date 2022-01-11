@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import Moment from 'react-moment';
@@ -28,6 +28,10 @@ export default function WeatherDetails() {
     const currUnit = useSelector(state => state.currUnit)
     const isDarkMode = useSelector(state => state.isDarkMode)
 
+    const currLocation = useMemo(() => {
+        return { cityName: fullWeather?.cityName, countryName: fullWeather?.countryName }
+    }, [fullWeather])
+
     const dispatch = useDispatch()
 
     const onToggleFavorite = () => {
@@ -37,7 +41,7 @@ export default function WeatherDetails() {
         dispatch(toggleFavorite(favoriteObj))
     }
 
-    const getWeatherBackground = () => {
+    const getWeatherBackground = () => { // try require  or object
         if (fullWeather.backgroundImg === 'day-clear') return dayClearBg
         if (fullWeather.backgroundImg === 'day-cloud') return dayCloudyBg
         if (fullWeather.backgroundImg === 'night-clear') return nightClearBg
@@ -56,7 +60,7 @@ export default function WeatherDetails() {
                     background:
                         `linear-gradient(rgba(0, 0, 0, ${isDarkMode ? 0.7 : 0.5}), rgba(0, 0, 0, ${isDarkMode ? 1 : 0.5})),url(${getWeatherBackground()})`
                 }}>
-                <Search favoriteLocations={favoriteLocations} dispatch={dispatch} currLocation={{ cityName: fullWeather.cityName, countryName: fullWeather.countryName }} />
+                <Search favoriteLocations={favoriteLocations} dispatch={dispatch} currLocation={currLocation} />
                 <div className="section-one flex col ">
                     <div className="time-and-location flex justify-sb align-c">
                         <div className="time flex col align-s">
@@ -75,9 +79,9 @@ export default function WeatherDetails() {
                             </span>
                         </div>
                         <div className="location-name flex col align-e">
-                            {favoriteLocations?.some(location => location.cityName === fullWeather.cityName && location.countryName === fullWeather.countryName) ?
-                                <FavoriteIcon className='favorite-icon' onClick={onToggleFavorite} /> :
-                                <FavoriteBorderIcon className='favorite-icon' onClick={onToggleFavorite} />
+                            {favoriteLocations?.every(location => location.locationKey !== fullWeather.locationKey) ?
+                                <FavoriteBorderIcon className='favorite-icon' onClick={onToggleFavorite} /> :
+                                <FavoriteIcon className='favorite-icon' onClick={onToggleFavorite} />
                             }
                             <span className="city-name">{fullWeather.cityName}</span>
                             <span className="country-name">{fullWeather.countryName}</span>

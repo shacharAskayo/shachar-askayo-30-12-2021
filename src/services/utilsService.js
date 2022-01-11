@@ -1,21 +1,20 @@
 
 export default {
     getFullWeatherStracturedData,
-    getImgByWeatherState,
     makeId,
 }
 
 function getFullWeatherStracturedData(currWeather, fiveDaysWeather) {
 
-    const currWeatherCopy = JSON.parse(JSON.stringify(currWeather))
-    const fiveDaysWeatherrCopy = JSON.parse(JSON.stringify(fiveDaysWeather))
+    const currWeatherCopy = { ...currWeather }//?? not needed
+    const fiveDaysWeatherrCopy = { ...fiveDaysWeather }//?? not needed
+
     const { WeatherText, Temperature, WeatherIcon, LocalObservationDateTime } = currWeatherCopy
     const { Headline, DailyForecasts } = fiveDaysWeatherrCopy
-    const localTime = LocalObservationDateTime.substring(0, LocalObservationDateTime.length - 6)
-    const currTime = new Date(localTime)
+    const localTime = LocalObservationDateTime.substring(0, LocalObservationDateTime.length - 6) // remove timezone calc
+    const currTime = new Date(localTime) // not needed working with moment 
     return {
-        createdAt: Date.now(),
-        backgroundImg: getImgByWeatherState(currTime, Temperature.Metric.Value),
+        backgroundImg: _getImgByWeatherState(currTime, Temperature.Metric.Value),
         currWeather: {
             time: currTime,
             weatherText: WeatherText,
@@ -59,22 +58,12 @@ function getFullWeatherStracturedData(currWeather, fiveDaysWeather) {
 
 }
 
-function getImgByWeatherState(currTime, temp) {
+function _getImgByWeatherState(currTime, temp) {
 
     const hours = currTime.getHours()
-    if (hours > 5 && hours < 17) return _getDayImg(temp)
-    else return _getNightImg(temp)
+    if (hours > 5 && hours < 17) return temp < 18 ? 'day-cloud' : 'day-clear'
+    else return temp < 15 ? 'night-cloud' : 'night-clear'
 
-}
-
-function _getDayImg(temp) {
-    if (temp < 18) return 'day-cloud'
-    else return 'day-clear'
-}
-
-function _getNightImg(temp) {
-    if (temp < 15) return 'night-cloud'
-    else return 'night-clear'
 }
 
 function makeId(length = 5) {

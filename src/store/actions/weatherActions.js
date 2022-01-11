@@ -40,7 +40,7 @@ export function toggleFavorite(fullWeatherObj) {
     return async dispatch => {
         try {
             const favoriteLocations = weatherService.toggleFavorite(fullWeatherObjCopy)
-            dispatch({ type: 'TOGGLE_FAVORITE_LOCATIONS', favoriteLocations })
+            dispatch({ type: 'UPDATE_FAVORITE_LOCATIONS', favoriteLocations })
             return favoriteLocations
         } catch (err) {
             console.log('Error in weatherAction in toggleFavorite function', err)
