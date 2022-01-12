@@ -4,15 +4,14 @@ export default {
     makeId,
 }
 
+const imgUrl = 'https://developer.accuweather.com/sites/default/files/'
+
 function getFullWeatherStracturedData(currWeather, fiveDaysWeather) {
 
-    const currWeatherCopy = { ...currWeather }//?? not needed
-    const fiveDaysWeatherrCopy = { ...fiveDaysWeather }//?? not needed
-
-    const { WeatherText, Temperature, WeatherIcon, LocalObservationDateTime } = currWeatherCopy
-    const { Headline, DailyForecasts } = fiveDaysWeatherrCopy
-    const localTime = LocalObservationDateTime.substring(0, LocalObservationDateTime.length - 6) // remove timezone calc
-    const currTime = new Date(localTime) // not needed working with moment 
+    const { WeatherText, Temperature, WeatherIcon, LocalObservationDateTime } = currWeather
+    const { Headline, DailyForecasts } = fiveDaysWeather
+    const localTime = LocalObservationDateTime.substring(0, LocalObservationDateTime.length - 6) // adding timezone calc
+    const currTime = new Date(localTime)
     return {
         backgroundImg: _getImgByWeatherState(currTime, Temperature.Metric.Value),
         currWeather: {
@@ -22,7 +21,7 @@ function getFullWeatherStracturedData(currWeather, fiveDaysWeather) {
                 c: Temperature.Metric.Value,
                 f: Temperature.Imperial.Value
             },
-            imgUrl: `https://developer.accuweather.com/sites/default/files/${WeatherIcon < 10 ? '0' : ''}${WeatherIcon}-s.png`
+            imgUrl: `${imgUrl}${WeatherIcon < 10 ? '0' : ''}${WeatherIcon}-s.png`
         },
         fiveDaysWeather: {
             headline: {
@@ -30,32 +29,26 @@ function getFullWeatherStracturedData(currWeather, fiveDaysWeather) {
                 severity: Headline.Severity
             },
             forcast: DailyForecasts.map(currDay => {
-
                 const { Temperature, Day, Night } = currDay
                 return {
                     time: new Date(currDay.Date),
-                    dayTime: {
-                        temperature: {
-                            c: ((Temperature.Maximum.Value - 32) * 5 / 9).toFixed(),
-                            f: Temperature.Maximum.Value,
-                        },
-                        imgUrl: `https://developer.accuweather.com/sites/default/files/${Day.Icon < 10 ? '0' : ''}${Day.Icon}-s.png`,
-                        IconPhrase: Day.IconPhrase
-                    },
-                    nightTime: {
-                        temperature: {
-                            c: ((Temperature.Minimum.Value - 32) * 5 / 9).toFixed(),
-                            f: Temperature.Minimum.Value,
-                        },
-                        imgUrl: `https://developer.accuweather.com/sites/default/files/${Night.Icon < 10 ? '0' : ''}${Night.Icon}-s.png`,
-                        IconPhrase: Day.IconPhrase
-                    },
-
+                    dayTime: getDailyForcastPreview(Temperature.Maximum.Value, Day.Icon),
+                    nightTime: getDailyForcastPreview(Temperature.Minimum.Value, Night.Icon),
                 }
             })
         }
     }
 
+}
+
+function getDailyForcastPreview(value, icon) {
+    return {
+        temperature: {
+            c: ((value - 32) * 5 / 9).toFixed(),
+            f: value,
+        },
+        imgUrl: `${imgUrl}${icon < 10 ? '0' : ''}${icon}-s.png`,
+    }
 }
 
 function _getImgByWeatherState(currTime, temp) {

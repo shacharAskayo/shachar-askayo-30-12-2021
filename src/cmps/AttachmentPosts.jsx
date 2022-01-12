@@ -1,17 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, {  useState } from 'react'
 import { cloudinaryService } from '../services/cloudinaryService'
-import weatherService from '../services/weatherService'
 import { addAttachmentPost, deleteAttachmentPost } from '../store/actions/weatherActions'
 import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
 import { Skeleton } from '@mui/material';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
-export default  React.memo( function AttachmentPosts({ dispatch, fullWeather }) {
+export default function AttachmentPosts({ dispatch, fullWeather }) {
 
     const [txt, setTxt] = useState('')
     const [currImg, setCurrImg] = useState('')
-
-
 
     const onPost = (ev) => {
         if (txt.length > 0 || currImg.length > 0) {
@@ -33,7 +30,7 @@ export default  React.memo( function AttachmentPosts({ dispatch, fullWeather }) 
         const { value } = target
         if (value.length <= 30) setTxt(value)
     }
-    
+
     return (
         <div className='attachments-container flex col'>
             <span className='container-title'> Attachments</span>
@@ -76,4 +73,4 @@ export default  React.memo( function AttachmentPosts({ dispatch, fullWeather }) 
             </div>
         </div>
     )
-})
+}

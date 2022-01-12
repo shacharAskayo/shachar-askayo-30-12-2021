@@ -1,6 +1,5 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-
 
 import { toggleFavorite } from '../store/actions/weatherActions';
 
@@ -32,12 +31,12 @@ export default function WeatherDetails() {
 
     const dispatch = useDispatch()
 
-    const onToggleFavorite = () => {
+    const onToggleFavorite = useCallback(() => {
         const { cityName, countryName, locationKey, currWeather } = fullWeather
         const { temperature, imgUrl } = currWeather
         const favoriteObj = { cityName, countryName, locationKey, temperature, imgUrl }
         dispatch(toggleFavorite(favoriteObj))
-    }
+    }, [fullWeather])
 
     const getWeatherBackground = () => { // try require  or object
         if (fullWeather.backgroundImg === 'day-clear') return dayClearBg
@@ -52,11 +51,7 @@ export default function WeatherDetails() {
 
     return (
         <div className="page">
-            <div className='forcast-container flex col'
-                style={{
-                    background:
-                        `linear-gradient(rgba(0, 0, 0, ${isDarkMode ? 0.7 : 0.5}), rgba(0, 0, 0, ${isDarkMode ? 1 : 0.5})),url(${getWeatherBackground()})`
-                }}>
+            <div className='forcast-container flex col' style={{ background: `linear-gradient(rgba(0, 0, 0, ${isDarkMode ? 0.7 : 0.5}), rgba(0, 0, 0, ${isDarkMode ? 1 : 0.5})),url(${getWeatherBackground()})` }}>
                 <Search
                     favoriteLocations={favoriteLocations}
                     dispatch={dispatch}

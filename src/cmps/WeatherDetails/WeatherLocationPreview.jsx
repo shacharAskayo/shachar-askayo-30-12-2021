@@ -5,7 +5,8 @@ import Moment from 'react-moment';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 
-export default function WeatherLocationPreview({ fullWeather, favoriteLocations, onToggleFavorite }) {
+export default React.memo(function WeatherLocationPreview({ fullWeather, favoriteLocations, onToggleFavorite }) {
+    
     return (
         <div className="time-and-location flex justify-sb align-c">
             <div className="time flex col align-s">
@@ -33,4 +34,4 @@ export default function WeatherLocationPreview({ fullWeather, favoriteLocations,
             </div>
         </div>
     )
-}
+})

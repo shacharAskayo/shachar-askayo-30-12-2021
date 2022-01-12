@@ -31,7 +31,7 @@ function App() {
       const { locationKey, cityName, countryName } = currLocation
       handleLoadWeather(locationKey, cityName, countryName)
     }
-    else { setTimeout(() => handleLoadWeather('215854', 'Tel Aviv', 'Israel'), 3000) }
+    else { handleLoadWeather('215854', 'Tel Aviv', 'Israel') }
   }
 
   const handleLoadWeather = async (locationKey, cityName, countryName) => {

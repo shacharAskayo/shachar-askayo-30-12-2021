@@ -7,7 +7,8 @@ const axios = Axios.create({
     withCredentials: false
 })
 
-const API_KEY = 'OQ7UXb4DY0wHjgeqgmZAAUiG3YzRWlSh'
+const apiKey = 'OQ7UXb4DY0wHjgeqgmZAAUiG3YzRWlSh'
+const apiUrl = 'https://dataservice.accuweather.com/'
 
 export default {
     getLocationByCords,
@@ -21,7 +22,7 @@ export default {
 async function getLocationByCords(lat, lon) {
 
     try {
-        const currLocation = await axios.get(`https://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=${API_KEY}&q=${lat},${lon}`)
+        const currLocation = await axios.get(`${apiUrl}locations/v1/cities/geoposition/search?apikey=${apiKey}&q=${lat},${lon}`)
         if (currLocation?.data) {
             const { Key, LocalizedName, Country } = currLocation.data
             return {
@@ -72,7 +73,7 @@ async function getAutoCompleteResults(txt) {
     if (storgedMatches && storgedMatches.length > 0) return storgedMatches
     else {
         try {
-            const autoCompleteResults = await axios.get(`https://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${API_KEY}&q=${txt}`)
+            const autoCompleteResults = await axios.get(`${apiUrl}locations/v1/cities/autocomplete?apikey=${apiKey}&q=${txt}`)
             if (autoCompleteResults.data?.length > 0) {
                 if (storgedAutoComplete.length > 0) {
                     autoCompleteResults.data.map(autoCompleteLoc => storgedAutoComplete.every(storgedAutoCompleteLoc => storgedAutoCompleteLoc.Key !== autoCompleteLoc.Key) ? storgedAutoComplete.push(autoCompleteLoc) : null)
@@ -89,7 +90,7 @@ async function getAutoCompleteResults(txt) {
 
 function toggleFavorite(favoriteObj) {
 
-    const favoriteObjCopy = {...favoriteObj}
+    const favoriteObjCopy = { ...favoriteObj }
     const storedFavoriteLocations = loadFavoirteLocations()
     if (storedFavoriteLocations.every(location => location.locationKey !== favoriteObjCopy.locationKey)) {
         storedFavoriteLocations.push(favoriteObjCopy)
@@ -106,7 +107,7 @@ function toggleFavorite(favoriteObj) {
 async function _getCurrWeather(locationKey) {
 
     try {
-        const currWeather = await axios.get(`https://dataservice.accuweather.com/currentconditions/v1/${locationKey}?apikey=${API_KEY}`)
+        const currWeather = await axios.get(`${apiUrl}currentconditions/v1/${locationKey}?apikey=${apiKey}`)
         if (currWeather.data) return currWeather.data[0]
     } catch (err) { console.log('Error in _getCurrWeather in weatherService ., Error:', err); }
 
@@ -115,7 +116,7 @@ async function _getCurrWeather(locationKey) {
 async function _getFiveDayWeather(locationKey) {
 
     try {
-        const fiveDaysWeather = await axios.get(`https://dataservice.accuweather.com/forecasts/v1/daily/5day/${locationKey}?apikey=${API_KEY}`)
+        const fiveDaysWeather = await axios.get(`${apiUrl}forecasts/v1/daily/5day/${locationKey}?apikey=${apiKey}`)
         if (fiveDaysWeather.data) return fiveDaysWeather.data
     } catch (err) { console.log('Error in _getFiveDayWeather in weatherService ., Error:', err); }
 
