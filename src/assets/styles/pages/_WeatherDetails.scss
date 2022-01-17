@@ -10,37 +10,35 @@
     .MuiSkeleton-circular {
         margin-bottom: 10px;
     }
-    .section-one {
-        height: 850px;
+  
+    .time-and-location {
         padding: 30px 50px;
+
+        width: 100%;
+
         margin-bottom: 20px;
-        .time-and-location {
-            width: 100%;
-
-            margin-bottom: 20px;
-            .clock {
-                font-size: 2.5rem;
+        .clock {
+            font-size: 2.5rem;
+        }
+        .date {
+            font-size: 1.5rem;
+            .day {
+                margin-right: 8px;
             }
-            .date {
-                font-size: 1.5rem;
-                .day {
-                    margin-right: 8px;
-                }
-                time {
-                    margin-right: 8px;
-                    &:first-child {
-                        margin-right: 0;
-                    }
+            time {
+                margin-right: 8px;
+                &:first-child {
+                    margin-right: 0;
                 }
             }
+        }
 
-            .location-name {
-                .city-name {
-                    font-size: 2rem;
-                }
-                .country-name {
-                    font-size: 1rem;
-                }
+        .location-name {
+            .city-name {
+                font-size: 2rem;
+            }
+            .country-name {
+                font-size: 1rem;
             }
         }
     }
@@ -56,7 +54,6 @@
         }
         .week-forcast-container {
             .today-weather {
-                width: 250px;
                 margin-right: 50px;
                 gap: 6px;
                 .weather-and-btn {
@@ -90,9 +87,6 @@
 
 @media (max-width: $normal-breakpoint) {
     .forcast-container {
-        .section-one {
-            height: unset;
-        }
         .section-two {
             height: unset;
             .title {
@@ -113,9 +107,7 @@
 
 @media (max-width: $narrow-breakpoint) {
     .forcast-container {
-        .section-one {
-            height: unset;
-        }
+     
         .section-two {
             height: unset;
             padding-right: 0;
@@ -141,10 +133,7 @@
         height: 100%;
         justify-content: space-around;
 
-        .section-one {
-            padding-left: 20px;
-            padding-right: 20px;
-        }
+    
         .section-two {
             padding-left: 20px;
             padding-right: 20px;
@@ -159,7 +148,7 @@
                 flex-direction: column;
                 gap: 30px;
             }
-            .forcast-preview{
+            .forcast-preview {
                 flex-direction: row;
                 justify-content: center;
                 gap: 100px !important;

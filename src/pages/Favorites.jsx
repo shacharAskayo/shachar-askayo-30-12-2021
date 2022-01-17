@@ -46,10 +46,6 @@ export default function Favorites({ history }) {
     const currUnit = useSelector(state => state.currUnit)
     const dispatch = useDispatch()
 
-    const handleChangePage = (event, newPage) => {
-        setPage(newPage);
-    };
-
     const handleChangeRowsPerPage = (event) => {
         setRowsPerPage(+event.target.value);
         setPage(0);
@@ -117,7 +113,7 @@ export default function Favorites({ history }) {
                     count={favoriteLocations.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
-                    onPageChange={handleChangePage}
+                    onPageChange={(ev,newPage)=>setPage(newPage)}
                     onRowsPerPageChange={handleChangeRowsPerPage}
                 />
             </Paper>

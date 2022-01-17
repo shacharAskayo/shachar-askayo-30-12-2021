@@ -8,14 +8,12 @@ import Favorites from './pages/Favorites';
 import weatherService from './services/weatherService';
 import SnackBar from './cmps/SnackBar';
 
-
 function App() {
 
   const isDarkMode = useSelector(state => state.isDarkMode)
   const [snackBarContent, setSnackBarContent] = useState(null)
 
   const dispatch = useDispatch()
-
   const modalTimeOutRef = useRef(null)
 
   useEffect(async () => {

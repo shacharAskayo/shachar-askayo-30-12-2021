@@ -18,7 +18,6 @@ export default {
     getAutoCompleteResults,
 }
 
-
 async function getLocationByCords(lat, lon) {
 
     try {
@@ -36,7 +35,6 @@ async function getLocationByCords(lat, lon) {
 }
 
 async function loadFullWeather(locationKey, cityName, countryName) {
-
     const currWeather = await _getCurrWeather(locationKey)
     const fiveDaysWeather = await _getFiveDayWeather(locationKey)
     if (currWeather && fiveDaysWeather) {

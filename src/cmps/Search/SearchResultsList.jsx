@@ -1,4 +1,3 @@
-import React from 'react'
 import SearchResultsPreview from './SearchResultsPreview'
 
 export default function SearchResultsList({ results ,onSearch , favoriteLocations}) {

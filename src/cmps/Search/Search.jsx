@@ -4,19 +4,17 @@ import { loadEmptyWeather, loadWeather } from '../../store/actions/weatherAction
 import SearchResultsList from './SearchResultsList';
 import _ from 'lodash';
 
-
-
-export default React.memo(function Search({ favoriteLocations, dispatch, currLocation }) {
+export default function Search({ favoriteLocations, dispatch, fullWeather }) {
 
     const [results, setResults] = useState(null)
     const inputRef = useRef(null)
 
-    useEffect(() => inputRef.current.value = `${currLocation.cityName}, ${currLocation.countryName} `, [inputRef])
-
+    useEffect(() => inputRef.current.value = `${fullWeather.cityName}, ${fullWeather.countryName} `, [inputRef])
 
     const handleChange = async ({ target }) => {
         const { value } = target
-        if (value.length > 0 && value.split('').every(val => val.charCodeAt() >= 65 && val.charCodeAt() <= 122)) {
+        const reg = /^[a-z]+$/i;
+        if (value.length > 0 && reg.test(value)) {
             const autoCompleteResults = await weatherService.getAutoCompleteResults(value)
             setResults(autoCompleteResults)
         }
@@ -39,4 +37,4 @@ export default React.memo(function Search({ favoriteLocations, dispatch, currLoc
             </div>
         </div>
     )
-})
+}
