@@ -10,11 +10,9 @@ export default {
 function loadAttachment(locationKey) {
 
     const storgedAttachments = storageService.query('attachments')
-    if (storgedAttachments && storgedAttachments.length > 0) {
-        const currAttachment = storgedAttachments.find(attachment => attachment.locationKey === locationKey)
-        if (currAttachment) return currAttachment
-        else return { id: utilsService.makeId(), locationKey, posts: [] }
-    } else { return { id: utilsService.makeId(), locationKey, posts: [] } }
+    const currAttachment = storgedAttachments?.find(attachment => attachment.locationKey === locationKey)
+    if (currAttachment) return currAttachment
+    else return { id: utilsService.makeId(), locationKey, posts: [] }
 
 }
 
